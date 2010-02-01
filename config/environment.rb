@@ -13,20 +13,10 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-
-  # Specify gems that this application depends on and have them installed with rake gems:install
-  # config.gem "bj"
-  # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
-  # config.gem "sqlite3-ruby", :lib => "sqlite3"
-  # config.gem "aws-s3", :lib => "aws/s3"
-
-  # Only load the plugins named here, in the order given (default is alphabetical).
-  # :all can be used as a placeholder for all plugins not explicitly named
-  # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-
-  # Skip frameworks you're not going to use. To use Rails without a database,
-  # you must remove the Active Record framework.
-  # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
+  config.gem "mongo_mapper"
+  config.gem "rspec", :lib => false, :version => "1.2.9"
+  config.gem "rspec-rails", :lib => false, :version => "1.2.9"
+  config.frameworks -= [ :active_record ]
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
@@ -39,3 +29,7 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
+
+
+  #MONGO MAPPER CONFIGURATION BLOCK
+  MongoMapper.database = "iptv_#{RAILS_ENV}"
