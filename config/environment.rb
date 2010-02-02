@@ -7,22 +7,27 @@ RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
-  # Settings in config/environments/* take precedence over those specified here.
-  # Application configuration should go into files in config/initializers
-  # -- all .rb files in that directory are automatically loaded.
-
-  # Add additional load paths for your own custom dirs
+  
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-  config.gem "mongo_mapper"
-  config.gem "rspec", :lib => false, :version => "1.2.9"
-  config.gem "rspec-rails", :lib => false, :version => "1.2.9"
+  
+  # == DEPENDENCIES GALLORE
+  # mongo_mapper 0.6.10 works only with mongo 0.18.2; even thought there's a newer one
+  MONGO_VERSION = "0.18.2" and RSPEC_VERSION = "1.2.9"
+  config.gem "mongo", :version => MONGO_VERSION
+  config.gem "mongo_ext", :lib => false, :version => MONGO_VERSION
+  config.gem "mongo_mapper", :version => "0.6.10"
+  config.gem "rspec", :lib => false, :version => RSPEC_VERSION
+  config.gem "rspec-rails", :lib => false, :version => RSPEC_VERSION
+  # performance increase for workling/starling
+  config.gem "system_timer", :lib => false
+  #rvideo and its pal, flvtool
+  config.gem "tecnobrat-rvideo", :lib => "rvideo"
+  config.gem "flvtool2", :lib => false
+  
   config.frameworks -= [ :active_record ]
 
-  # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
-  # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-  # Run "rake -D time" for a list of tasks for finding time zone names.
   config.time_zone = 'UTC'
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
@@ -30,6 +35,5 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
-
-  #MONGO MAPPER CONFIGURATION BLOCK
-  MongoMapper.database = "iptv_#{RAILS_ENV}"
+#MONGO MAPPER CONFIGURATION BLOCK
+MongoMapper.database = "iptv_#{RAILS_ENV}"
