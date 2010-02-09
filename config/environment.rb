@@ -21,7 +21,7 @@ Rails::Initializer.run do |config|
   # performance increase for workling/starling
   config.gem "system_timer", :lib => false
   #rvideo and its pal, flvtool
-  config.gem "tecnobrat-rvideo", :lib => "rvideo"
+  config.gem "rvideo-tecnobrat", :lib => "rvideo"
   config.gem "flvtool2", :lib => false
   
   config.frameworks -= [ :active_record ]
