@@ -5,14 +5,14 @@ def state_okay? object, state
 end
 
 describe Video do
-  
-  context "its properties" do
-    it "should have an state, defaulting to created"
-    it "should have id as an integer"
-  end
-  
-  context "in its instantiated state" do
-    it "should be in the instantiated state"
+      
+  context "in its initialized state" do
+    before(:all) do
+      @video = Video.new
+    end
+    it "should be in the initialized state" do
+      
+    end
     it "should have title"
     it "should have tags"
     it "should have categories"
