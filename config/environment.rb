@@ -16,6 +16,7 @@ Rails::Initializer.run do |config|
   config.gem "mongo", :version => MONGO_VERSION
   config.gem "mongo_ext", :lib => false, :version => MONGO_VERSION
   config.gem "mongo_mapper", :version => "0.6.10"
+  config.gem "state-fu"
   config.gem "rspec", :lib => false, :version => RSPEC_VERSION
   config.gem "rspec-rails", :lib => false, :version => RSPEC_VERSION
   # performance increase for workling/starling
@@ -24,7 +25,7 @@ Rails::Initializer.run do |config|
   config.gem "rvideo-tecnobrat", :lib => "rvideo"
   config.gem "flvtool2", :lib => false
   
-  config.frameworks -= [ :active_record ]
+  #config.frameworks -= [ :active_record ]
 
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
