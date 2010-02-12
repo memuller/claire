@@ -1,7 +1,32 @@
 
 
 module Paperclip
-          
+  #interpolations are used to handle file saving.
+	module Interpolations
+    
+		#saves video thumbnails using jpg extensions
+    def video_extensions attachment, style_name
+      if style_name == :original
+        if attachment.original_filename.include? "."
+          attachment.original_filename.split(".").last
+        else
+          ""
+        end
+      else
+        'jpg'
+      end
+    end
+    
+    # Handle string ids (mongo) on file paths (not used right now)
+    def id_partition attachment, style
+      if (id = attachment.instance._id).is_a?(Integer)
+        ("%09d" % id).scan(/\d{3}/).join("/")
+      else
+        id.scan(/.{3}/).first(3).join("/")
+      end
+    end
+      
+  end           
   #this mixin goes to the class using paperclip; those modifications aim at making it compatible
 	#with MongoMapper.
   module ClassMethods
