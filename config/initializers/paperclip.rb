@@ -61,5 +61,9 @@ module Paperclip
         attachment.send(:flush_errors) unless attachment.valid?
       }
     end
-  end
+  	#paperclip requires a logger, let's give him one =)
+		def logger
+  		Rails.logger
+  	end
+	end
 end
