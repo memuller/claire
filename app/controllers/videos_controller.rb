@@ -12,9 +12,9 @@ class VideosController < ApplicationController
   end
   
   def create
-    @video = Video.new(params[:video])
+    @video = Video.new(params[:video]) 
     if @video.save
-      @video.write_uploaded_file params[:upload]
+      #@video.write_uploaded_file params[:upload]
       flash[:notice] = "Successfully created video."
       redirect_to @video
     else

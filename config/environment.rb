@@ -17,6 +17,7 @@ Rails::Initializer.run do |config|
   config.gem "mongo_ext", :lib => false, :version => MONGO_VERSION
   config.gem "mongo_mapper", :version => "0.6.10"
   config.gem "state-fu"
+  config.gem "paperclip"
   config.gem "rspec", :lib => false, :version => RSPEC_VERSION
   config.gem "rspec-rails", :lib => false, :version => RSPEC_VERSION
   # performance increase for workling/starling
