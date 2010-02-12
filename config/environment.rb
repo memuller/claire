@@ -14,7 +14,7 @@ Rails::Initializer.run do |config|
   # mongo_mapper 0.6.10 works only with mongo 0.18.2; even thought there's a newer one
   MONGO_VERSION = "0.18.2" and RSPEC_VERSION = "1.2.9"
   config.gem "mongo", :version => MONGO_VERSION
-  config.gem "mongo_ext", :lib => false, :version => MONGO_VERSION
+  #config.gem "mongo_ext", :lib => false, :version => MONGO_VERSION
   config.gem "mongo_mapper", :version => "0.6.10"
   config.gem "state-fu"
   config.gem "paperclip"
