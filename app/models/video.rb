@@ -13,7 +13,7 @@ class Video
   key :name, String
   key :subtitle, String
   key :description, String
-  key :tags, String
+  key :tags, Array
   key :category_id, ObjectId
   key :subcategory_id, ObjectId
   key :desired_formats, Array
