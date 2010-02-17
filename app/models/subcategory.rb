@@ -1,8 +1,8 @@
 class Subcategory
-  include MongoMapper::Document
-  key :name, String, :required => true
-  key :description, String
+  include MongoMapper::EmbeddedDocument
   
-  belongs_to :category
-  key :category_id, ObjectId
+	key :name, String, :required => true
+  key :description, String
+
+
 end
