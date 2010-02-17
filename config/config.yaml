@@ -1,0 +1,13 @@
+formats:
+  flv-hd:
+    resolution: 960x540
+  flv-mq: 
+    resolution: 480x270
+
+publishers:
+  youtube:
+    username:
+    password:
+    api_key:
+  mover:
+    folder:  
