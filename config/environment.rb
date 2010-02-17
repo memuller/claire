@@ -29,6 +29,8 @@ Rails::Initializer.run do |config|
   #config.frameworks -= [ :active_record ]
 
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
+  
+  CONFIG = YAML.load "#{RAILS_ROOT}/config/config.yaml"
 
   config.time_zone = 'UTC'
 
