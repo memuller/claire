@@ -2,10 +2,6 @@ class Video
   include MongoMapper::Document
   include StateFu
   include Paperclip
-  
-  def logger
-    Rails.logger
-  end
                      
   #state machine controller  
   key :state_fu_field, String
@@ -13,10 +9,10 @@ class Video
   key :name, String
   key :subtitle, String
   key :description, String
-  key :tags, Array
+  key :tags, String
   key :category_id, ObjectId
   key :subcategory_id, ObjectId
-  key :desired_formats, Array
+  key :formats, Array
   #metadata
   key :duration, Integer
   #statistics
@@ -33,7 +29,8 @@ class Video
   
   has_attached_file :video, :styles => { :thumb_medium => "215x120", :thumb_large => "500x281" }, 
                     :processors => [:video_thumbnail],
-                    :path => "#{RAILS_ROOT}/public/videos/:id/:style.:video_extensions"
+                    :path => "#{RAILS_ROOT}/public/videos/:id/:style.:video_extensions",
+                    :url =>  "videos/:id/:style.:video_extensions"
   #relationships
   belongs_to :category
   belongs_to :subcategory
@@ -42,19 +39,19 @@ class Video
     #starting up, video's not here yet
     state :initialized do 
       requires :name
-      event :check_upload, :to => :raw_received
+      event :receive_raw, :to => :raw_received
     end
     
     #raw's here
     state :raw_received do
-      requires :raw_file_okay?
+      requires :raw_file_okay?      
       event :convert, :to => :converting
     end
     
     #them convert it
     state :converting do
       requires :raw_format_okay?
-      on_entry :work_on_conversions
+      on_entry :work_on_converting
       event :publish, :to => :publishing
     end
     #publish the converted files
@@ -72,29 +69,32 @@ class Video
     state :done 
     #...and their transitions
     event :error, :from => :ALL, :to => :error
-    event :done, :from => :ALL, :to => :done 
+    event :done, :from => :ALL, :to => :done
+    event :reset, :from => :ALL, :to => :initialized 
   
     #save states to the database after each transition
     states do
-      accepted { 
-        puts "changed state"
-        #status = current_state
+      accepted {
         save! 
-      }
+        }
     end  
-  end                              
-  
-  #writes an uploaded raw to it's destination
-  def write_uploaded_file(upload)
-    File.open raw_file_path, 'wb' do |f|
-      f.write upload[:datafile].read
-    end
   end
+  
+  #the save method will, by default, ignite the conversion routines if the video
+  #has just been created.
+  #alias :old_save :save
+  #def save
+  #  self.old_save
+  #  if self.initialized?
+  #    receive_raw! 
+  #  end
+  #end
+                                  
   
   #returns raw file path
   def uploaded_file_path
     "#{RAILS_ROOT}/public/videos/#{id}/original.#{video_file_name.split(".").last}"
-  end
+  end                 
   
   #checks if raw exists
   def raw_file_okay?
@@ -112,13 +112,16 @@ class Video
      end     
   end
   
+  #returns other 
+  
   #== WORKERS
-  
-  
-  
-  def work_on_publishing(target)
-    raise NotImplementedError unless [:youtube, :localhost].include? target
+  def work_on_publishing
+    PublisherWorker.asynch_publish :video_id => id
   end
-  
-  
+  def work_on_converting
+    ConverterWorker.asynch_convert :video_id => id
+  end
+  def work_on_archiving
+    ArchiverWorker.asynch_archive :video_id => id
+  end  
 end
