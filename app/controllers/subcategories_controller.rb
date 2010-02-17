@@ -12,8 +12,10 @@ class SubcategoriesController < ApplicationController
   end
   
   def create
+		@category = Category.find params[:category][:id]
     @subcategory = Subcategory.new(params[:subcategory])
-    if @subcategory.save
+    @category.subcategories << @subcategory 
+		if @category.save
       flash[:notice] = "Successfully created subcategory."
       redirect_to @subcategory
     else
