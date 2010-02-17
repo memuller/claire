@@ -5,10 +5,7 @@
 
 RAILS_ROOT = File.dirname __FILE__
 RAILS_USER = "memuller"
-
 God.pid_file_directory = "#{RAILS_ROOT}/log"
-
-
 
 #== STARLING MESSAGE SERVER
 God.watch do |t|
