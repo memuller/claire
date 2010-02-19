@@ -112,11 +112,29 @@ class Video
      end     
   end
   
-  #returns other 
+	#a simple way to get related videos
+	def related
+		Video.all :category_id => category_id, :order => "num_views DESC, updated_at DESC", :limit => 5
+	end
+  #into_xml
+  def into_xml(type= :long)
+    hash = {
+      :title => name,
+      :category => category_name,
+      :subcategory => subcategory_name,
+      :rating => rating
+    }
+    if type == :long
+      hash.merge!({
+        :description => description
+      })
+    end
+    hash    
+  end
   
-  #== WORKERS
+  #== WORKERS    
   def work_on_publishing
-    PublisherWorker.asynch_publish :video_id => id
+    PublisherWorker.asynch_publish :video_id => _id
   end
   def work_on_converting
     ConverterWorker.asynch_convert :video_id => id
