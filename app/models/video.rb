@@ -9,17 +9,17 @@ class Video
   key :name, String
   key :subtitle, String
   key :description, String
-  key :tags, String
   key :category_id, ObjectId
   key :subcategory_id, ObjectId
   key :formats, Array
   #metadata
   key :duration, Integer
   #statistics
-  key :num_ratings, Integer
-  key :value_ratings, Integer
-  key :rating, Integer
-  key :num_views, Integer
+  key :num_ratings, Integer, :default => 0
+  key :value_ratings, Integer, :default => 0
+  key :rating, Float, :default => 0
+  key :num_views, Integer, :default => 0
+  timestamps!
   
   #raw/thumbnails info
   key :video_file_name, String
