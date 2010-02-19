@@ -101,6 +101,34 @@ class Video
     File.exists? uploaded_file_path
   end
   
+	def update_category_name
+  	category_name = category.name and save! unless category.nil?
+	end
+	
+	def update_subcategory_name
+		subcategory_name = category.subcategories
+	end
+  
+	#returns an hash with all encoded videos urls
+  def encoded_videos_url
+    hash = {}
+    formats.each do |fmt|
+      hash.merge!({"#{fmt}" => encoded_video_url(fmt)})
+    end
+    hash
+  end
+  
+  #returns urls for a specific encoded video
+	def encoded_video_url format
+    "/videos/#{id}/#{format}.#{CONFIG['formats'][format]['format']}" 
+  end
+  
+  #returns url for video thumbnails
+	def thumbnail_url(format= :thumb_medium)
+    "/videos/#{id}/thumb_#{format.to_s}.jpg"
+  end                                  
+  
+  
   #checks if raw is a valid, convertible video
   def raw_format_okay?
      begin
