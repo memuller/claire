@@ -41,4 +41,10 @@ class CategoriesController < ApplicationController
     flash[:notice] = "Successfully destroyed category."
     redirect_to categories_url
   end
+  
+  def get_subcategories_menu
+    category = Category.find params[:category_id]
+    render :partial => "videos/subcategory", :locals => {:subcategories => category.subcategories}
+  end
+  
 end
