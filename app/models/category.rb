@@ -26,4 +26,13 @@ class Category
 		"/public/categories/#{id}/original.jpg"		
 	end                                       									
                   
+  #returns a list of its subcategories names
+	def subcategories_names
+    arr = []
+    subcategories.each do |i|
+      arr << i.name
+    end
+		arr.join(", ")
+  end
+  
 end
