@@ -13,7 +13,17 @@ class Category
   key :image_content_type, String
   key :image_updated_at, DateTime
   
-  has_attached_file :image, :styles => { :thumb => "215x120"}, 
+  has_attached_file :image, :styles => { :thumb_square => "50x50"}, 
                     :path => "#{RAILS_ROOT}/public/categories/:id/:style.jpg"
 
+	#returns thumbnail url
+	def thumbnail_url
+		"/public/categories/#{id}/thumb_square.jpg"		
+	end
+	
+	#returns original image url
+	def image_url
+		"/public/categories/#{id}/original.jpg"		
+	end                                       									
+                  
 end
