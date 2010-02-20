@@ -38,16 +38,7 @@ class Category
 	# fetches all of this category's videos
 	def videos args={}
 		args[:order] ||= "created_at DESC"
-		args.push! {:category_id => id}
+		args.push!({:category_id => id})
 		Videos.all args 
-	end
-	
-	def into_xml
-		{
-			:name => name,
-			:description => description,
-			:image => image_url,
-			:videos => videos 
-		}
 	end
 end
