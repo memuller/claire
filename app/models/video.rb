@@ -28,69 +28,74 @@ class Video
   key :video_content_type, String
   key :video_updated_at, DateTime
   
-  has_attached_file :video, :styles => { :thumb_medium => "215x120", :thumb_large => "500x281" }, 
+  has_attached_file :video, :styles => { :thumb_square => "50x50", :thumb_medium => "215x120", :thumb_large => "500x281" }, 
                     :processors => [:video_thumbnail],
                     :path => "#{RAILS_ROOT}/public/videos/:id/:style.:video_extensions",
                     :url =>  "videos/:id/:style.:video_extensions"
   #relationships
   belongs_to :category
-  belongs_to :subcategory
+	key :category_name, String
+	key :subcategory_name, String
+  
+  after_save :update_tags
 
   machine :default do 
-    #starting up, video's not here yet
-    state :initialized do 
-      requires :name
-      event :receive_raw, :to => :raw_received
-    end
-    
-    #raw's here
-    state :raw_received do
-      requires :raw_file_okay?      
-      event :convert, :to => :converting
-    end
-    
-    #them convert it
-    state :converting do
-      requires :raw_format_okay?
-      on_entry :work_on_converting
-      event :publish, :to => :publishing
-    end
-    #publish the converted files
-    state :publishing do
-      on_entry :work_on_publishing
-      event :archive, :to => :archiving
-    end
-    #archive the raw
-    state :archiving do
-      on_entry :work_on_archiving
-    end
-    
-    #blank, signaling states
-    state :error
-    state :done 
-    #...and their transitions
-    event :error, :from => :ALL, :to => :error
-    event :done, :from => :ALL, :to => :done
-    event :reset, :from => :ALL, :to => :initialized 
-  
-    #save states to the database after each transition
-    states do
-      accepted {
-        save! 
-        }
-    end  
+  	#starting up, video's not here yet
+	 state :initialized do 
+     requires :name
+     event :receive_raw, :to => :raw_received
+   end
+   
+   #raw's here
+   state :raw_received do
+     requires :raw_file_okay?      
+     event :convert, :to => :converting
+   end
+   
+   #them convert it
+   state :converting do
+     requires :raw_format_okay?
+     on_entry :work_on_converting
+     event :publish, :to => :publishing
+   end
+   #publish the converted files
+   state :publishing do
+     on_entry :work_on_publishing
+     event :archive, :to => :archiving
+   end
+   #archive the raw
+   state :archiving do
+     on_entry :work_on_archiving
+   end
+   
+   #blank, signaling states
+   state :error
+   state :done 
+   #...and their transitions
+   event :error, :from => :ALL, :to => :error
+   event :done, :from => :ALL, :to => :done
+   event :reset, :from => :ALL, :to => :initialized 
+
+   #save states to the database after each transition
+   states do
+     accepted {
+       save! 
+       }         
+		end
+	end
+  #rates an video                                
+  def rate! num
+    num_ratings += 1
+    value_ratings += num
+    rating = (value_ratings.to_f / num_ratings.to_f).round(1)
+    save!
   end
   
-  #the save method will, by default, ignite the conversion routines if the video
-  #has just been created.
-  #alias :old_save :save
-  #def save
-  #  self.old_save
-  #  if self.initialized?
-  #    receive_raw! 
-  #  end
-  #end
-                                  
+  #retries a conversion
+  def start_jobs!
+    receive_raw!
+    convert!
+  end
   
   #returns raw file path
   def uploaded_file_path
