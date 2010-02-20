@@ -5,6 +5,11 @@ class VideosController < ApplicationController
   
   def show
     @video = Video.find(params[:id])
+		respond_to do |wants|
+			wants.xml do
+				render :layout => false
+			end
+		end
   end
   
   def new
