@@ -12,6 +12,7 @@ class Video
   key :category_id, ObjectId
   key :subcategory_id, ObjectId
   key :formats, Array
+  key :conversion_errors, Array
   #metadata
   key :duration, Integer
   #statistics
