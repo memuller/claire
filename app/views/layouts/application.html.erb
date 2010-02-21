@@ -4,9 +4,19 @@
   <head>
     <title><%= h(yield(:title) || "Untitled") %></title>
     <%= stylesheet_link_tag 'application' %>
+    <script src="/javascripts/prototype.js" type="text/javascript"></script>
     <%= yield(:head) %>
   </head>
   <body>
+    <div id='container' style="height:25px">
+      <div style="float:right;">
+        <%= image_tag "cn-logo.gif", :style => "float:right;" %>
+        <div style=" padding-top:10px;padding-right:115px;text-align:right;width:500px">
+          <%= link_to "Videos", videos_url %> - <%= link_to "Categories", categories_url %> - <%= link_to "Subcategories", subcategories_url %> - <%= link_to "New Video", new_video_url %>
+         </div>
+         
+      </div>
+    </div>
     <div id="container">
       <%- flash.each do |name, msg| -%>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
