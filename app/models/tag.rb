@@ -3,6 +3,7 @@ class Tag
   
   key :name, String, :required => true
   key :items, Array, :default => []
+  key :weight, Integer, :default => 0
   
   def videos
     videos = []
@@ -16,8 +17,9 @@ class Tag
   
   def add_to video
     video = Video.find(video) unless video.is_a?(Video)
-    video.tags << name and video.save!
-    items << video.id and save!
+    video.tags << name and video.save! unless video.tags.include? name
+    items << video.id and save! unless items.include? video.id
+    
   end
   
   def self.set_tag tag_name, video
