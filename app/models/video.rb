@@ -171,22 +171,7 @@ class Video
 	def related
 		Video.all :category_id => category_id, :order => "num_views DESC, updated_at DESC", :limit => 5
 	end
-  #into_xml
-  def into_xml(type= :long)
-    hash = {
-      :title => name,
-      :category => category_name,
-      :subcategory => subcategory_name,
-      :rating => rating
-    }
-    if type == :long
-      hash.merge!({
-        :description => description
-      })
-    end
-    hash    
-  end
-  
+
   #== WORKERS    
   def work_on_publishing
     PublisherWorker.asynch_publish :video_id => _id
