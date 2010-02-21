@@ -5,6 +5,9 @@
 
 RAILS_ROOT = File.dirname __FILE__
 RAILS_USER = "memuller"
+RAILS_GROUP = "staff"
+#RUBY_BIN = "/Users/memuller/.rvm/ree-1.8.7-2009.10/bin/ruby"
+RUBY_BIN = "ruby"
 God.pid_file_directory = "#{RAILS_ROOT}/log"
 
 #== STARLING MESSAGE SERVER
@@ -15,7 +18,7 @@ God.watch do |t|
   t.interval = 20.seconds
   t.start_if do |start|
     start.condition :process_running do |p|
-      p.interval = 10.seconds
+      p.interval = 20.seconds
       p.running = false
     end
   end
@@ -51,21 +54,23 @@ end
 God.watch do |t|
   t.name = "workling"
   t.dir = RAILS_ROOT
-  t.start = "ruby script/workling_client start"
-  t.stop = "ruby script/workling_client stop"
-  t.stop = "ruby script/workling_client restart"
-  t.interval = 30.seconds
-  t.start_grace = 10.seconds
-  t.restart_grace = 10.seconds
-  t.uid = RAILS_USER #needs to run as such to ensure local gems are okay
+  #t.gid = RAILS_GROUP
+  #t.uid = RAILS_USER #needs to run as such to ensure local gems are okay
+  t.start = "#{RUBY_BIN} script/workling_client start"
+  t.stop = "#{RUBY_BIN} script/workling_client stop"
+  t.stop = "#{RUBY_BIN} script/workling_client restart"
+  t.interval = 20.seconds
+  t.start_grace = 5.seconds
+  t.restart_grace = 5.seconds
+  
   
   #runs as a daemon, so requires an way to track status via PID
-  t.pid_file = File.join(God.pid_file_directory, "workling.pid")
+  t.pid_file = File.join(God.pid_file_directory, "workling_monitor.pid")
   t.behavior(:clean_pid_file)
   
   t.start_if do |start|
     start.condition :process_running do |p|
-      p.interval = 10.seconds
+      p.interval = 15.seconds
       p.running = false
     end
   end  
@@ -81,7 +86,7 @@ God.watch do |t|
   
   t.start_if do |start|
     start.condition :process_running do |p|
-      p.interval = 10.seconds
+      p.interval = 30.seconds
       p.running = false
     end    
   end
