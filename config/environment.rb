@@ -25,12 +25,12 @@ Rails::Initializer.run do |config|
   #rvideo and its pal, flvtool
   config.gem "rvideo-tecnobrat", :lib => "rvideo"
   config.gem "flvtool2", :lib => false
+  #for youtube video publishing
+  config.gem "youtube-g", :lib => "youtube_g"
   
   #config.frameworks -= [ :active_record ]
 
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-  
-  CONFIG = YAML.load "#{RAILS_ROOT}/config/config.yaml"
 
   config.time_zone = 'UTC'
 
@@ -41,3 +41,4 @@ end
 
 #MONGO MAPPER CONFIGURATION BLOCK
 MongoMapper.database = "iptv_#{RAILS_ENV}"
+CONFIG = YAML.load_file "#{RAILS_ROOT}/config/config.yaml"  
