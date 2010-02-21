@@ -1,8 +1,10 @@
 formats:
   flv-hd:
     resolution: 960x540
+    format: flv
   flv-mq: 
     resolution: 480x270
+    format: flv
 
 publishers:
   youtube:
