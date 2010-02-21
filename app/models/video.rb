@@ -107,6 +107,26 @@ class Video
   def raw_file_okay?
     File.exists? uploaded_file_path
   end
+   
+  #overwrites tag setter to support reverse indexing on the tag collection
+  def update_tags
+    tags_that_are_okay = []
+    #searchs all tags that have this item indexed
+    #and remove this item from here, unless the tag
+    #is on this item tags field
+    Tag.all(:conditions => {:items => id}).each do |t|
+      if tags.include? t.name
+        tags_that_are_okay << t.name
+      else
+        t.items = t.items.reject{ |item| item == id }
+        t.save!
+      end
+    end
+    
+    tags.each do |t|
+      Tag.set_tag t, id unless tags_that_are_okay.include? t                  
+    end
+  end
   
 	def update_category_name
   	category_name = category.name and save! unless category.nil?
