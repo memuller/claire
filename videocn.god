@@ -1,7 +1,4 @@
-# run with: god -c /path/to/mongrel.god -D
-# 
-# This is the actual config file used to keep the mongrels of
-# gravatar.com running.
+#this little guy keeps the whole system running
 
 RAILS_ROOT = File.dirname __FILE__
 RAILS_USER = "memuller"
