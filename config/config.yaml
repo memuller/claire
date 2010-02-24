@@ -1,3 +1,7 @@
+general:
+  videos:
+    short_description_length: 40
+
 formats:
   flv-hd:
     resolution: 960x540
