@@ -38,7 +38,7 @@ class Video
 	key :category_name, String
 	key :subcategory_name, String
   
-  after_save :update_tags
+  after_save lambda { update_tags and update_category_name }	
 
   machine :default do 
   	#starting up, video's not here yet
@@ -108,7 +108,7 @@ class Video
     File.exists? uploaded_file_path
   end
    
-  #overwrites tag setter to support reverse indexing on the tag collection
+  #overwrites tags to support reverse indexing on the tag collection
   def update_tags
     tags_that_are_okay = []
     #searchs all tags that have this item indexed
@@ -128,10 +128,12 @@ class Video
     end
   end
   
+	#updates category name local cache 
 	def update_category_name
   	category_name = category.name and save! unless category.nil?
 	end
 	
+	#updates subcategory name local cache
 	def update_subcategory_name
 		subcategory_name = category.subcategories
 	end
@@ -146,7 +148,7 @@ class Video
   end
   
   #returns urls for a specific encoded video
-	def encoded_video_url format
+	def encoded_video_url(format="#{formats.first}")
     "/videos/#{id}/#{format}.#{CONFIG['formats'][format]['format']}" 
   end
   
@@ -167,6 +169,23 @@ class Video
      end     
   end
   
+	#shortens description
+	def short_description
+		if description.length > CONFIG['videos']['short_description_length']
+			str = ""
+			description.split(" ").each do |word|
+				if (str + word).length > CONFIG['videos']['short_description_length'] -3
+					str += "..."
+					return str
+				else
+					str += word
+				end 	
+			end
+		else
+			return description
+		end
+	end
+	
 	#a simple way to get related videos
 	def related
 		Video.all :category_id => category_id, :order => "num_views DESC, updated_at DESC", :limit => 5
