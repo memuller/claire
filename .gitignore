@@ -1,4 +1,4 @@
 log/*.log
 log/*.output
 log/*.pid
-videos
+/public/videos
