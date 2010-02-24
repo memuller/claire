@@ -4,7 +4,7 @@ class PublisherWorker < Workling::Base
   end
   def publish params
     errors = [] and video = Video.find(params[:video_id])
-    uploader = YouTubeG::Upload::VideoUpload.new(.config['youtube']['username'], config['youtube']['password'], config['youtube']['api_key'])
+    uploader = YouTubeG::Upload::VideoUpload.new(config['youtube']['username'], config['youtube']['password'], config['youtube']['api_key'])
     uploader.upload File.open("video."), :title => 'test', :description => '', :category => 'People', :keywords => %w[bla]
     
     if errors.empty?
