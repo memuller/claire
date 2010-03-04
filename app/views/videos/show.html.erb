@@ -1,0 +1,36 @@
+<% title "Video" %>
+<% case @video.default.name 
+  when :error %>
+	  <div id="flash_error">
+  	  <strong> Encoding process failed. </strong>
+  	  <% @video.worker_errors.each do |error| %>
+  		  <br />
+  		  <%= error %> 
+  	  <% end %>
+  	  <br />Please try to fix the issues that caused the error (eg. upload a valid video file); them restart the encoding process by clicking <%= link_to "here", :action => :reset, :params => { :id => @video.id } %>.
+    </div>
+  <% when :done %>
+	<% else %>
+	  <div id="flash_notice">
+		  <strong>This video is not avaliable because it's still being encoded.</strong><br/> Please wait until encoding finishes. If it's in this state for too long, you can try <%= link_to "resetting", :action => :reset, :params => { :id => @video.id }%> it. 
+		</div>			
+<% end %>
+
+<p>
+  <strong>Title:</strong>
+  <%=h @video.title %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @video.description %>
+</p>
+<p>
+  <strong>Tags:</strong>
+  <%=h @video.tags_as_string %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_video_path(@video) %> |
+  <%= link_to "Destroy", @video, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", videos_path %>
+</p>

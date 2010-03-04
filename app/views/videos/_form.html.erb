@@ -1,0 +1,38 @@
+<% form_for @video, :html =>{:multipart => true} do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.check_box :special %>
+    <%= f.label :special, "This video is on the front page." %>
+    <div id='special_remove'></div>    
+  <p>
+    <%= f.label :category_id, "Select category:" %> <br />
+    <%= collection_select :video, :category_id, Category.all, :id, :name %>
+  </p>
+  <div id='subcategory_select'></div>  
+  <p>
+    <% content_tag :label, :for => "video_upload" do %>
+      Video file
+    <% end %><br />
+    <%= f.file_field :video %>
+  </p>
+  <p>
+    <%= f.label :tags %><br />
+    <%= f.text_field :tags %>
+  </p>
+  
+  <p>
+    <%= check_box_tag "video[publish_to][]", :youtube, false %>
+  <p><%= f.submit "Submit" %></p>
+<% end %>
+
+<%= observe_field :video_category_id, :frequency => 0.5, :url => {:controller => :categories, :action => :get_subcategories_menu }, :update => 'subcategory_select', :with => 'category_id' %>
+
+<%= observe_field :video_special, :frequency => 0.5, :url => {:controller => :videos, :action => :can_be_special, :params => {:video_id => @video.id}}, :update => 'special_remove', :with => "special" %>

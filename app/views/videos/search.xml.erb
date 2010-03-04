@@ -1,0 +1,13 @@
+xml.channel do
+	xml.title "Project St. Claire - Searching for: #{@search_terms}"
+	xml.description ""
+	
+	render :partial => "show", :collection => @results, :as => :video
+
+	xml.atom:link, :rel => "next" :href => "http://mysite.com/feed2.rss"
+	
+end
+  
+	
+	end
+end

@@ -1,0 +1,25 @@
+<% title "Videos" %>
+
+<table>
+  <tr>
+    <th> - </th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Category</th>
+    <th>Tags</th>
+  </tr>
+  <% for video in @videos %>
+    <tr>
+      <td><img src='<%=video.thumbnail_url(:square)%>'></td>
+      <td><%=h video.title %></td>
+      <td><%=h video.description %></td>
+      <td><%=h video.category.name %></td>
+      <td><%=h video.tags_as_string %></td>
+      <td><%= link_to "Show", video %></td>
+      <td><%= link_to "Edit", edit_video_path(video) %></td>
+      <td><%= link_to "Destroy", video, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Video", new_video_path %></p>

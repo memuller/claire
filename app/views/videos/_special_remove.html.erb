@@ -1,0 +1,5 @@
+<p> 
+	This item can't be set on the frontpage because only 5 itens can be there at the same time. <br/>
+	You'll have to unset this item, or select one of the following to be disabled: <br/>
+	<%= collection_select :video, :special_to_remove, Video.all(:special => true), :id, :name%>
+</p>
