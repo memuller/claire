@@ -6,15 +6,12 @@ class Video
   #state machine controller  
   key :state_fu_field, String
   #general info
-  key :name, String
   key :subtitle, String
   key :description, String
-  key :tags, Array
   key :category_id, ObjectId
   key :subcategory_id, ObjectId
   key :formats, Array
-  key :conversion_errors, Array
-  #metadata
+  key :special, Boolean, :default => false
   key :duration, Integer
   #statistics
   key :num_ratings, Integer, :default => 0
