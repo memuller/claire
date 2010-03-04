@@ -1,0 +1,108 @@
+p>. "Home":/projects/claire/wiki - "Status":/projecs/claire/milestones - [[Descrição Técnica]] - [[Diagramas]] - [[API]] - "Online":/projects/online-cn/wiki - "IPTV":/projects/iptv/wiki - [[bibliography:Referências Bibliográficas]]
+
+
+Devido a amplitude intrínseca do projeto, o mesmo possui uma estrutura igualmente complexa, composta de vários processos distintos.
+
+A vantagem de tal estrutura é que cada componente do sistema é completamente isolada das demais, ou seja, em caso de falhas, é preciso encerrar e reiniciar somente um processo. Significa também que cada parte pode ser executada em um equipamento separado; e podem haver mais de uma instância do mesmo componente. Por exemplo, caso as tarefas de Encoding estejam sendo muito taxativas ao servidor, este componente pode ser movido para outro equipamento. Caso isso ainda não seja suficiente, várias instâncias dele podem ser executadas.
+
+
+!/images/videocn_en-diagram.png!
+
+
+O gerenciador de processos, God, se encarrega de manter todas as partes do sistema (exceto o Rails, que é controlado pelo Apache) funcionando e com saúde. Ele reinicia componentes travados ou que estejam usando mais recursos do que deveriam, e alerta o administrador do sistema caso a situação fuja do controle (por exemplo, um componente falhando cinco vezes consecutivas).
+
+h1. Dependências
+
+*   Ruby 1.8.7
+**    Ruby Enterprise Edition recomendado devido a grande ganho de performance.
+*   Apache com mod_passenger instalado
+**    Recomenda-se também instalação do mod_porter, para aumento de performance ao lidar com uploads.
+*   Rubygems 1.3.5
+**    Várias dependências na forma de gems; podem ser facilmente instaladas com o comando rake:gems:install executado na pasta raiz do projeto.
+*   Em sistemas debian, pacote build-essential.
+*   FFMPEG, compilado com as opções abaixo. Isso implica, por sua vez, em uma série de dependências.
+{{{
+  FFmpeg version 0.5, Copyright (c) 2000-2009 Fabrice Bellard, et al.
+    configuration: --prefix=/opt/local --disable-vhook --enable-gpl --enable-postproc --enable-swscale --enable-avfilter --enable-avfilter-lavf --enable-libmp3lame --enable-libvorbis --enable-libtheora --enable-libdirac --enable-libschroedinger --enable-libfaac --enable-libfaad --enable-libxvid --enable-libx264 --mandir=/opt/local/share/man --enable-shared --enable-pthreads --cc=/usr/bin/gcc-4.0 --arch=i386
+    libavutil     49.15. 0 / 49.15. 0
+    libavcodec    52.20. 0 / 52.20. 0
+    libavformat   52.31. 0 / 52.31. 0
+    libavdevice   52. 1. 0 / 52. 1. 0
+    libavfilter    1. 4. 0 /  1. 4. 0
+    libswscale     1. 7. 1 /  1. 7. 1
+    libpostproc   51. 2. 0 / 51. 2. 0
+    built on Jan 29 2010 19:12:51, gcc: 4.0.1
+}}}
+
+
+h1. Descrição & Requerimentos dos componentes do projeto
+
+
+h2. Rails (aplicativo)
+
+O aplicativo propriamente dito é responsável pela interface administrativa dos vídeos e pela API de acesso utilizada para visualização dos mesmos.
+
+Apache com mod_passenger automaticamente inicia processos Rails e encaminha-os requests. Cada processo Rails pode processar somente um request simultaneamente. Isto é um problema com upload de vídeos, no qual um processo pode passar vários segundos decodificando um vídeo enviado; por isso, recomenda-se a instalação do mod_porter.
+
+Cada processo Rails ocupa aproximadamente 60MBs de RAM, sendo executados pelo usuário do Apache.
+
+
+h2. God (monitor de processos)
+
+God é um monitor de processos escrito em Ruby. Ele monitora todos os demais componentes do sistema. Isso quer dizer que:
+*   Para iniciar o sistema inteiro, é necessário iniciar somente o God.
+*   Caso uma parte do sistema falhe, o God a reiniciará.
+*   Caso uma parte do sistema esteja usando mais recursos do que limites especificados, o God a reiniciára.
+*   Caso situações de "pânico" sejam observadas (por exemplo, excesso de processos falhando), o God logará estas ocorrências e as reportará por e-mail.
+*   God pode passar comandos específicos para uma parte do sistema. Por exemplo, _god workling restart_ reiniciará o Workling.
+*   God daemoniza processos que normalmente não seriam daemons.
+
+God executa como root. Todos os processos executados por ele também o são _(na verdade, não precisariam ser - mas está acontecendo um problema, não-diagnosticado, quando o mesmo tenta executar um aplicativo ruby como outro usuário. O problema parece relacionado com o modo de funcionamento do comando su e variáveis do sistema)_.
+
+
+h2. Starling (servidor de queue)
+
+Todas as tarefas onerosas do sistema - como conversão de vídeos, recálculo de relacionamentos, etc - são realizadas de forma *assíncrona*, sendo representadas como *tickets de serviço*. O *Starling*, como servidor de queues, recebe e armazena estas requisições de serviço, até que algum trabalhador _(worker)_ esteja pronto para atendê-las.
+
+Um processo Starling típico ocupa 15MBs de RAM. Ele precisa ser executado como root, e ouvir requests em uma porta (recomenda-se 22122). Não é possível implementar autenticação em um servidor Starling, logo esta porta só deve ser acessível pelos equipamentos nos quais estão sendo executados Rails e Workling.
+
+
+h2. Workling (cliente de queue, spawner de workers)
+
+O *Workling* é o processo responsável por ler os requests de serviço armazenados no Starling, e atribuí-los ao componente do sistema correspondente - um Worker. Ele executará um processo separado para cada Worker, e matará este processo quando o trabalho estiver concluído.
+
+Como cada worker precisa carregar todas as bibliotecas do sistema em sua própria thread para fazer suas tarefas, eles costumam ser pesados, ocupando cerca de 3/4 da RAM do processo Rails. A vantagem é que erros de um worker não afetam o sistema como um todo.
+
+Caso isto prove-se muito taxativo, é possível alterar o projeto de forma que eles executem como uma fork do processo Rails, diminuindo o consumo de RAM, mas aumentando a instabilidade do projeto, dado que erros em um worker derrubarão o processo inteiro.
+
+Workling pode ser executado pelo mesmo usuário que executa o Rails, mas recomenda-se o uso do root, para que o mesmo possa ser monitorado adequadamente pelo God.
+
+
+h2. Workers (trabalhadores)
+
+Quatro *workers* são responsáveis pela execução de tarefas taxativas do projeto. Lembrando que cada worker pode ser colocado em um equipamento em separado:
+
+*   *Encoder*: realiza a conversão dos vídeos para uma lista de formatos pré-estabelecidos, usando o FFMPEG. É, de longe, a parte mais taxativa em recursos de processamento do projeto, e também a mais propensa a errors.
+
+*   *Publisher*: publica os vídeos convertidos em seus destinos. Isso envolve, por exemplo, enviá-los para o Youtube, ou mover os mesmos para um outro servidor via SCP, caso necessário.
+
+*   *Archiver*: arquiva o vídeo original (raw), para economizar espaço no servidor do aplicativo. O arquivamento pode ser através de uma cópia SCP, Rsync, ou simplesmente destruição do arquivo.
+
+*   *Manager*: realiza tarefas diversas, geralmente relacionadas a manutenção da metadata dos vídeos. Ex.:
+**    Recalcula os relacionamentos entre os vídeos, usando algoritmo Baynesiano.
+**    Reconstrói índices reversos do banco de dados.
+**    Expira caches inválidos do MemCache.
+
+
+h2. MongoDB (banco de dados)
+
+*MongoDB* é um banco de dados orientado a objetos, utilizado pelo aplicativo. Sua natureza schema-less e grande desempenho atendem adequadamente as necessidades do projeto.
+
+MongoDB deve ser executado como root, e liga-se a uma porta; acesso a mesma suporta autenticação.
+
+Clusters usando sharding (master/master) e replicação (master/slave) podem ser criados de forma trivial, caso necessário.
+
+Backup de seu conteúdo pode ser feito com o comando _mongodump_, agendado via Cron ou similar.
+
+Um processo Mongo típico, com 5000 vídeos cadastrados, ocupa XX de RAM. Dado a natureza concorrente das queries do Mongo, o mesmo pode processar várias ao mesmo tempo, cada query representando um aumento no consumo de RAM igual aos dados (working set) necessários para processá-la, o que não deve passar de 10MB por query.
+

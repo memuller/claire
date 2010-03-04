@@ -1,0 +1,84 @@
+p>. _Documentação incompleta. Veja ticket [#35]._
+
+p>. "Home":/projects/claire/wiki - "Status":/projecs/claire/milestones - [[Descrição Técnica]] - [[Diagramas]] - [[API]] - "Online":/projects/online-cn/wiki - "IPTV":/projects/iptv/wiki - [[bibliography:Referências Bibliográficas]]
+
+h1. Introdução
+
+Santa Clara de Assis, patrona da televisão, foi uma freira de tamanha devoção que, quando o declínio de sua saúde a impediu de comparecer à Missa, mesmo assim ela pôde assistir a celebração Eucarística, que projetou-se nas paredes de seu quarto.
+Este milagre é a inspiração para o codinome do projeto St. Clara, e a manifestação de sua missão - levar a Palavra do Evangelho à todos que a aguardam, através de um vasto e acessível catálogo de mídia.
+
+h1. Objetivos
+
+O projeto contempla a criação de um sistema que possibilite a captação, organização, armazenamento e entrega de conteúdo na forma de vídeos, utilizando serviços e tecnologias da Internet e seus derivados, como IPTV.
+
+Estas mídias podem ser entregues tanto a aplicativos e serviços da Fundação e seus parceiros, quanto para provedores externos - como Youtube e Vimeo. Quando em uso interno, os vídeos agem como um recurso único e centralizado, compartilhando as mesmas alterações, comentários de usuário, qualificações, etc entre todos os aplicativos.
+
+Até a primeira metade de Março/2010, os componentes mais evidentes do projeto serão o Online - portal de acopanhamento & participação ao vivo da programação de rádio e TV; e no sistema que fornece conteúdo aos protótipos do projeto IPTV Canção Nova.
+
+h1. Análise Estratégica
+
+h2. Matriz SWOT
+
+* _Matriz apresentada somente em forma textual, por falta de tempo e demanda por uma matriz gráfica. Caso enseje pela criação de uma, entrar em contato com o desenvolvedor._
+
+h3. Forças
+
+* Centralização de mídia áudio-visual
+* Facilidade de uso em provedores de outra mídias (eg. portal, blogs)
+* Arquivo digital de conteúdo
+* Facilita criação/publicação da mídia, em comparação com as ferramentas atuais
+* Elimina parte mais complexa do desenvolvimento de aplicativos que lidam com vídeos
+* Facilita envio de mídia para provedores externos (eg. Youtube)
+* Infra-estrutura centralizada facilita manutenção e alterações
+* Potencial para tratar também de conteúdo de áudio, como podcasts.
+* Capacidade para inserção de conteúdo publicitário
+
+h3. Fraquezas
+
+* Grande mudança de paradigma e alterações em modelo de negócios, para que todos os benefícios possam ser usufruídos
+* Grande mudança no estilo de desenvolvimento dos aplicativos integrantes
+* Dificuldades para efetiva captura de conteúdo
+* Aplicativos usuários do sistema devem acompanhar os recursos disponíveis no mesmo (inovação deve ser feita primeira no sistema)
+* Introdução de um _single point of failure_ (um único componente que, em caso de falha, prejudica todos os que dele dependem)
+* Os aplicativos que mais poderiam obter benefícios do sistema já foram construídos (WebTV, Podcasts)
+
+h3. Oportunidades
+
+* Foco nacional em digitalização de mídias
+* Aumento geral na qualidade e banda das conexões de internet
+* Ausência de soluções de conteúdo on-demand de alta qualidade no cenário católico global
+* Grande popularidade de provedores de portais de vídeo na internet
+* Demanda comprovada por conteúdo Canção Nova
+* Tendência de socialização de mídia
+
+h3. Ameaças
+
+* Qualidade superior de serviço provido por outros portais
+* Crescimento e mudanças aceleradas dificultam adaptação a mudanças em tempo hábil
+* Excentricidades da maioria do público-alvo Canção Nova
+* Preferência geral por meios altamente socializados
+
+h2. Interpretação da Matriz SWOT
+
+h3. Conversões
+_(Transformações de fraquezas em oportunidades)_
+
+* As mudanças de paradigmas necessárias são sempre para melhor, auxiliando a inserir a fundação no contexto de Web social e participativa, do qual ainda está distante
+* As alterações no estilo de desenvolvimento do aplicativo aumentam a experiência dos desenvolvedores, modularidade dos sistemas e clarificam requerimentos.
+* Devido a forma que o sistema é arquitedo, os riscos do mesmo falhar são remotos.
+
+h3. Compatibilidades
+_(Combinação de forças com oportunidades)_
+* A demanda comprovada (por exemplo, através de conteúdo não-oficial no Youtube) por conteúdo da Canção Nova, aliado a possibilidade da existência de um repositório digital, permite a criação de um modelo de negócios que comtemple esta oportunidade e forneça usuário o conteúdo que ele busca sem que o mesmo precisse recorrer a pirataria.
+* A rápida inserção do projeto em escala global tornaria-on pioneiro.
+* Recente progressiva expansão da Canção Nova para mídias sociais
+
+
+h2. Timeframe
+
+O projeto é dividido em etapas; no qual é intencional a ausência de planejamento referente a etapa seguinte. Tal abordagem é derivada de metodologias ágeis de gestão, e de análise sistemática de projetos de gestão tradicional.
+
+Ao final de cada etapa, os progressos da mesma são consolidados e documentados. A qualquer momento que progressos no projeto sejam desejados, uma nova etapa é planejada.
+
+Salvo por dificuldades no deployment e ajustes progressivos (que possivelmente serão necessários conforme caminha o desenvolvimento do primeiro aplicativo usuário do projeto, o portal IPTV), a etapa atual será entregue na primeira metade de Março.
+

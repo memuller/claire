@@ -1,0 +1,38 @@
+p>. _Be wary - This section is still incomplete._
+
+h2. Planning & Research 
+
+* J. Scott Armstrong (1982). "The Value of Formal Planning for Strategic Decisions". Strategic Management Journal 3: 197–211. doi:10.1002/smj.4250030303.
+* Armstrong. M. A handbook of Human Resource Management Practice (10th edition) 2006, Kogan Page , London ISBN 0-7494-4631-5
+* Wayne C. Booth, Gregory G. Colomb, Joseph M. Williams. The Craft of Research (3th edition), 2008 Chicago Press, ISBN 978-0-226-06566-3
+
+h2. Concept and media scenario
+
+--mainly that nice CNET article
+ 
+h2. Media encoding and resources
+
+--they're mostly on Lede's notebook, will need to wait until Friday to get them
+
+h2. Development resources
+
+-- most things are on CN's machine. Guess we can split them on:
+* Starling/Workling
+* Rails stuff
+
+* State machines (aasm/state_fu)
+**    Rubyist's aasm at master - Github . http://github.com/rubyist/aasm , as of 2010/02/10
+**    Davidlee's state-fu at master - Github . http://github.com/davidlee/state-fu#fn1 , as of 2010/02/08
+
+* REE and threading
+
+* Rvideo
+
+* Panda, of course
+
+*   MongoDB
+**     MongoDB Data Modeling and Rails . http://www.mongodb.org/display/DOCS/MongoDB+Data+Modeling+and+Rails , as of 2010/02/12     
+
+*   MRSS
+**    Yahoo Search! Media RSS Module - RSS 2.0 Module. http://video.search.yahoo.com/mrss , as of 2010/02/20
+**    Using Cooliris with Ruby on Rails. http://www.paulsturgess.co.uk/articles/show/78-using-cooliris-with-ruby-on-rails , as of 2010/02/20
