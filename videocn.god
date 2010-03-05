@@ -56,7 +56,7 @@ God.watch do |t|
   t.start = "#{RUBY_BIN} script/workling_client start"
   t.stop = "#{RUBY_BIN} script/workling_client stop"
   t.stop = "#{RUBY_BIN} script/workling_client restart"
-  t.interval = 20.seconds
+  t.interval = 15.seconds
   t.start_grace = 5.seconds
   t.restart_grace = 5.seconds
   

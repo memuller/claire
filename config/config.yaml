@@ -4,16 +4,26 @@ general:
 
 formats:
   flv-hd:
+    name: FLV hi-def (960x540)
     resolution: 960x540
     format: flv
-  flv-mq: 
+  flv-mq:
+    name: FLV low-def (480x270) 
     resolution: 480x270
     format: flv
 
 publishers:
   youtube:
-    username:
-    password:
-    api_key:
-  mover:
-    folder:  
+    username: muller.mem@gmail.com
+    password: S1ndeL%google%1988
+    api_key: AI39si4UAHNrQFg7GXEgFt1AagGHyFMCYRi4ofOSh275Jrph1yppiFkT1AW_1j6GiUceKQVO8aqWtk1SHlAIOigAboUrlOY5Ng
+      
+archiver:
+  folder:
+  username: 
+  hostname: 
+  identity: 
+  
+    
+manager:
+    
