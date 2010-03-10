@@ -1,4 +1,7 @@
 general:
+  host: localhost:3000
+  per_page: 10
+  
   videos:
     short_description_length: 40
 

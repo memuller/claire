@@ -1,6 +1,6 @@
-p>. _Documentação incompleta. Veja ticket [#35]._
+p>. _Documentação da API em andamento. Veja ticket [#42]._
 
-p>. "Home":/projects/claire/wiki - "Status":/projecs/claire/milestones - [[Descrição Técnica]] - [[Diagramas]] - [[API]] - "Online":/projects/online-cn/wiki - "IPTV":/projects/iptv/wiki - [[bibliography:Referências Bibliográficas]]
+p>. "Home":/projects/claire/wiki - "Status":/projects/claire/milestones - [[Descrição Técnica]] - [[Diagramas]] - [[API]] - "Online":/projects/online-cn/wiki - "IPTV":/projects/iptv/wiki - [[bibliography:Referências Bibliográficas]]
 
 h1. Introdução
 
@@ -18,8 +18,6 @@ Até a primeira metade de Março/2010, os componentes mais evidentes do projeto 
 h1. Análise Estratégica
 
 h2. Matriz SWOT
-
-* _Matriz apresentada somente em forma textual, por falta de tempo e demanda por uma matriz gráfica. Caso enseje pela criação de uma, entrar em contato com o desenvolvedor._
 
 h3. Forças
 
@@ -81,4 +79,8 @@ O projeto é dividido em etapas; no qual é intencional a ausência de planejame
 Ao final de cada etapa, os progressos da mesma são consolidados e documentados. A qualquer momento que progressos no projeto sejam desejados, uma nova etapa é planejada.
 
 Salvo por dificuldades no deployment e ajustes progressivos (que possivelmente serão necessários conforme caminha o desenvolvimento do primeiro aplicativo usuário do projeto, o portal IPTV), a etapa atual será entregue na primeira metade de Março.
+
+h2. Esclarecimentos
+
+Deve-se observar que o o projeto consiste de uma engine e *repositório de vídeos* somente; que fornece conteúdo à clientes através de uma [[API]]. O projeto não contempla os meios pelos quais a mídia será distribuída _(embora isso possa ser sugerido e tratado como um projeto separado)_, nem se responsabiliza pelo mal-uso das mesmas, ou falhas ocorridas em seus clientes. O projeto St. Claire não é _(e não será)_ um aplicativo para uso direto de consumidores de mídia, salvo quando usado em projetos nos quais é facultado ao usuário a possibilidade de publicação de mídia, como ferramentas sociais.
 

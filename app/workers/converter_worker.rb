@@ -5,7 +5,7 @@ class ConverterWorker < Workling::Base
     CONFIG["formats"]
   end
   
-  #builds a valid recipe mixing provided params with the default ones.
+	#builds a valid recipe mixing provided params with the default ones.
   def recipe args={}
     raise ArgumentError, "Requires input and output files." unless args.include? 'input' and args.include? 'output' and args.include? 'format'
     params = {
@@ -35,6 +35,7 @@ class ConverterWorker < Workling::Base
     video = Video.find params[:video_id]
     input = video.uploaded_file_path
     config.each do |format|
+			next unless video.encode_to.include? format.to_sym
     	output = "#{RAILS_ROOT}/public/videos/#{video.id}/#{format[0]}.#{format[1]['format']}"
       system recipe(format[1].merge({'input' => input, 'output' => output }))
       

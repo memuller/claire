@@ -4,10 +4,20 @@ class VideosController < ApplicationController
   end
   
 	def search
-		@results = Search.new params
+		set_pagination 				
+		@results = Search.new(params).results		
+		@search_terms = ""
+		params.to_a.each do |item|
+			@search_terms += ", "
+			@search_terms += item.join(" => ")
+		end
+		
 		respond_to do |wants|
 			wants.xml
 		end
+		
+	rescue Exception => e
+		render :text => e.message, :status => get_status_code(e)
 	end
 
   def show
@@ -15,7 +25,9 @@ class VideosController < ApplicationController
     	render :text => "", :status => 401 and return
 		end
 		respond_to do |wants|
-			wants.xml
+			wants.xml do
+				render :partial => 'show'
+			end
 			wants.html
 		end
   end
@@ -25,10 +37,9 @@ class VideosController < ApplicationController
   end
   
   def create
-		debugger
     @video = Video.new(params[:video])
+		debugger
     if @video.save
-			debugger
 			Video.unespecial! params[:special_to_remove] if @video.special?
       @video.start_jobs!
       flash[:notice] = "Successfully created video."
@@ -71,15 +82,31 @@ class VideosController < ApplicationController
 		end
 		render :text => ""
 	end
-			
+	
+	def rate
+		video = Video.find params[:id]
+		params[:rating] = params[:value] if params[:value]
+		video.rate! params[:rating]
+	rescue
+		render_text "ERROR", :status => 400
+	end
+	
+	def view
+		video = Video.find params[:id]
+		video.update_attributes! :num_views => video.num_views + 1
+		render_text "OK", :status => 200
+	rescue
+		render_text "ERROR", :status => 400
+	end		
 	
 	def reset 
 		@video = Video.find params[:id]
 		@video.reset!
-		flash[:notice] = "Video reseted, encoding has begun again." 
+		flash[:notice] = "Video reseted, encoding has begun again."
+		status = 200 
 	rescue Expection => e 
-		flash[:error] = e.message
+		flash[:error] = e.message and status = 400
 	ensure
-		redirect_to @video
+		redirect_to @video, :status => status
 	end
 end

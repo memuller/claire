@@ -6,7 +6,7 @@ class Video
   #general info
   key :title, String
   key :subtitle, String
-  key :description, String
+  key :description, String, :default => ""
   key :tags, Array, :default => []
   key :special, Boolean, :default => false
 
@@ -17,7 +17,7 @@ class Video
 
 	key :publish_to, Array, :default => []
 	key :archive_to, Boolean, :default => []
-	key :encode_to, Array, :default => avaliable_formats
+	key :encode_to, Array, :default => []
   key :formats, Array
 	#metadata
   key :duration, Integer
@@ -99,10 +99,10 @@ class Video
 
   #rates an video
 	def rate! num
-    num_ratings += 1
-    value_ratings += num
-    rating = (value_ratings.to_f / num_ratings.to_f).round(1)
-    save!
+    @num_ratings += 1
+    @value_ratings += num
+    @rating = (@value_ratings.to_f / @num_ratings.to_f).round(1)
+    self.save!
   end
 
   #retries a conversion
@@ -168,7 +168,7 @@ class Video
 	# a lots of hooks to be run while saving items.
 	before_save lambda{ |video|
 		  #converts the tags sent via form (strings) to an array
-			if video.tags.size == 1 and video.tags.first.is_a? String
+			if video.tags.size == 1 and video.tags.first.is_a? String 
 				video.tags = video.tags.first.split(" ")
 			end
 			#caches category name
@@ -180,7 +180,7 @@ class Video
 			#updates the indexable texts field with desc, title and subtitle
 			title = video.title.split(" ")
 			description = video.description.split(" ")
-			video.text = (title | description | tags).uniq!
+			video.texts = (title | description | video.tags).uniq!
 			#maps string values (again, comming from forms) to symbols.
 			video.publish_to.map!(&:to_sym)
 		}
@@ -234,7 +234,7 @@ class Video
 	#shortens description
 	def short_description
 		return "" if description.nil? or description.empty?
-		if description.length > CONFIG['videos']['short_description_length']
+		if description.length > CONFIG['general']['videos']['short_description_length']
 			str = ""
 			description.split(" ").each do |word|
 				if (str + word).length > CONFIG['videos']['short_description_length'] -3

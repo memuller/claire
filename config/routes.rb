@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :videos
+  map.connect 'videos/search/.:format', :controller => 'videos', :action => 'search' 
+	map.resources :videos
 
   map.resources :subcategories
 

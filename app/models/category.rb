@@ -4,7 +4,7 @@ class Category
   
 	key :name, String, :required => true
   key :description, String
-  
+	 
   many :subcategories
 
 	#raw/thumbnails info
@@ -35,6 +35,10 @@ class Category
 		arr.join(", ")
   end
   
+	def num_videos
+		Video.count :category_id => id
+	end
+
 	# fetches all of this category's videos
 	def videos args={}
 		args[:order] ||= "created_at DESC"

@@ -7,7 +7,6 @@ class PublisherWorker < Workling::Base
 		errors = []
  		# loops on all publishers specified on the config file
 		config.each do |item|
-			LOGGER.start "Publishing video #{video.id} on #{item.first.classify}"
 			# gets a publisher from the Publishers module with the specified name
 			klass = Publishers.const_get(item.first.classify)
 			

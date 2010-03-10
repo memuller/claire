@@ -1,10 +1,21 @@
 class CategoriesController < ApplicationController
+	caches_page :index
   def index
     @categories = Category.all
   end
   
   def show
-    @category = Category.find(params[:id])
+    raise "(404) Category not found" unless @category = Category.find(params[:id])
+		respond_to do |wants|
+			wants.html
+			wants.xml do
+				set_pagination
+				@results = @category.videos
+				render 'videos/search', :format => 'xml'
+			end						
+		end
+	#rescue Exception => e
+		#render :text => e.message, :status => get_status_code(e)
   end
   
   def new

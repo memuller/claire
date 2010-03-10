@@ -15,7 +15,7 @@ class ArchiverWorker < Workling::Base
 			v = v.sub("RAILS_ROOT", RAILS_ROOT) and params.merge!({k.to_sym => v}) unless v.nil? 			
 		end		
 		#folder options means file copy.	
-		if params[:folder]
+		if params[:folder] and not params[:folder].empty?
 			params[:folder] += "/" unless params[:folder].last == "/"
 			if params[:folder].include? ":video_id"
 				params[:folder] = params[:folder].sub ":video_id", @video.id

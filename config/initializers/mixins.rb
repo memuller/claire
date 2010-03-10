@@ -3,6 +3,16 @@ class Symbol
 		self.to_s.classify.constantize rescue return nil
 	end
 end
+class	Hash
+	def keys_to_sym
+		result = {}
+		self.each do |k,v|
+			k = k.to_sym if k.respond_to? :to_sym 
+			result.merge!({k => v}) 
+		end
+		result
+	end
+end
 
 module Kernel
 	def retryable(args = {}, &block)
