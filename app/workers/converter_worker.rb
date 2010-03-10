@@ -31,6 +31,7 @@ class ConverterWorker < Workling::Base
   end
   
   def convert params
+	
     errors = []
     video = Video.find params[:video_id]
     input = video.uploaded_file_path
