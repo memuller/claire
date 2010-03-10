@@ -36,6 +36,7 @@ class ConverterWorker < Workling::Base
     video = Video.find params[:video_id]
     input = video.uploaded_file_path
     config.each do |format|
+			puts video.encode_to.include? format[0].to_sym
 			next unless video.encode_to.include? format[0].to_sym
     	output = "#{RAILS_ROOT}/public/videos/#{video.id}/#{format[0]}.#{format[1]['format']}"
       system recipe(format[1].merge({'input' => input, 'output' => output }))

@@ -174,7 +174,7 @@ class Video
 			#caches category name
 			video.category_name = video.category.name if video.category
 			if video.subcategory_id and video.category
-			  subcategory = Category.subcategories.find{|cat| cat.id == video.subcategory_id}
+			  subcategory = video.category.subcategories.select{|cat| cat.id == video.subcategory_id}.first
 			  video.subcategory_name = subcategory.name unless subcategory.nil?
 	    end
 			#updates the indexable texts field with desc, title and subtitle
