@@ -7,7 +7,7 @@ class Search
   
   def params_without_options
 		params = {}
-		params.replace(@params).delete_if{ |k,v| [:offset, :limit, :okay].include?(k) }
+		params.replace(@params).delete_if{ |k,v| [:offset, :limit, :okay, :order].include?(k) }
 		params
 	end
 	
@@ -17,7 +17,8 @@ class Search
 		end 
 		if (@i >= (params_without_options.size - 1)) or specify == :end
 			args.merge!(:offset => @params[:offset]) if @params[:offset]
-			args.merge!(:limit => @params[:limit]) if @params[:limit]			
+			args.merge!(:limit => @params[:limit]) if @params[:limit]
+			args.merge!(:order => @params[:order]) if @params[:order]			
 		end
 		args
 	end
@@ -59,6 +60,7 @@ class Search
 		end			
 		
 	  @sorting_weight = {
+			:order => 10,
 			:offset => 10,
 			:limit => 10,
 			:okay => -1,
@@ -76,8 +78,8 @@ class Search
 	
 	def initialize params={}
 		@params = {}
-		#debugger
-		params[:limit] = CONFIG['general']['per_page'] unless params[:limit]
+		#debugger                         
+		params[:limit] = CONFIG['general']['per_page'] if params[:limit].nil?
 		if params[:page]
 			params[:offset] = ( (params[:page] - 1) * params[:limit] ) - 1
 		end 
