@@ -26,12 +26,15 @@ class Search
 	def add_range args
 		build_range
 		args.merge!({ :id => {'$in' => [*@range]} }) unless @range.empty?
-		#puts "range was #{@range}"
 		args
 	end
 
 	def search
 		@i = 0 and @results = [] and @range = []
+		if params_without_options.empty?
+			@results = @klass.all @params
+			return @results
+		end
 		params_without_options.each do |attribute, value|
 			if value.is_a? Array
 				value.each_with_index do |item,j|
@@ -90,6 +93,8 @@ class Search
 				true
 			when 'false'
 				false
+			else
+				v
 			end
 			@params.merge!({k.to_sym => v})
 		end
@@ -98,7 +103,7 @@ class Search
 		@params.delete :what
 		@params[:okay] = true if @klass = Video and @params[:okay].nil?	
 		search
-		@results
+		return @results
 	end
 	
 	
