@@ -2,6 +2,8 @@ xml.channel do
 	if @category
 		xml.title @category.name
 		xml.description @category.description
+		xml.header @category.image_url
+		xml.num_videos @category.num_videos
 	else
 		xml.title "Project St. Claire - Searching for: #{@search_terms}"
 	end

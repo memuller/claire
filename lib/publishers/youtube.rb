@@ -55,8 +55,7 @@ module Publishers
 				@video.save!
 				LOGGER.ok "Published video #{@video.id} to Youtube as #{video_id}."
 				return true
-			else
-				LOGGER.error "Failed to publish video #{@video.id} to Youtube with error #{response.code} - #{response.body}"				
+			else			
 				return "Youtube upload failed with status code #{response.code}. \n Response body: \n #{response.body}" 
       end
 		end

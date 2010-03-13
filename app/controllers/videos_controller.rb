@@ -1,6 +1,7 @@
 class VideosController < ApplicationController
+	caches_page :show
   def index
-    @videos = Video.all
+		@videos = Video.all
   end
   
 	def search
@@ -107,6 +108,6 @@ class VideosController < ApplicationController
 	rescue Expection => e 
 		flash[:error] = e.message and status = 400
 	ensure
-		redirect_to @video, :status => status
+		redirect_to :action => :show, :status => status, :params => {:id => @video.id}
 	end
 end
