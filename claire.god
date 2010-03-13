@@ -1,9 +1,23 @@
-#this little guy keeps the whole system running
+#==this little guy keeps the whole system running
+
+module God
+	module Conditions
+		class WorklingHanged < PollCondition
+			def initialize; super; end 
+			def valid?; true; end
+			def test
+				file = %x[tail -1 #{God.pid_file_directory}/workling.output].include? "Exiting"
+			rescue
+				true
+			end
+		end
+	end
+end
+
 
 RAILS_ROOT = File.dirname __FILE__
 RAILS_USER = "memuller"
 RAILS_GROUP = "staff"
-#RUBY_BIN = "/Users/memuller/.rvm/ree-1.8.7-2009.10/bin/ruby"
 RUBY_BIN = "ruby"
 God.pid_file_directory = "#{RAILS_ROOT}/log"
 
@@ -65,12 +79,19 @@ God.watch do |t|
   t.pid_file = File.join(God.pid_file_directory, "workling_monitor.pid")
   t.behavior(:clean_pid_file)
   
+	t.restart_if do |restart|
+		restart.condition :workling_hanged do |p|
+			p.interval = 15.seconds
+		end
+  end
+
   t.start_if do |start|
     start.condition :process_running do |p|
-      p.interval = 15.seconds
+      p.interval = 40.seconds
       p.running = false
     end
-  end  
+	end
+	  
 end
 
 #== MONGOD
@@ -87,4 +108,17 @@ God.watch do |t|
       p.running = false
     end    
   end
+end
+
+God.watch do |t|
+	t.name = "mongrel"
+	t.start = "ruby script/server --debugger"
+	t.start_grace = 30.seconds
+	
+	#t.start_if do |start|
+  #  start.condition :process_running do |p|
+  #    p.interval = 20.seconds
+  #    p.running = false
+  #  end    
+  #end
 end
