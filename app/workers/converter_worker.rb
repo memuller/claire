@@ -30,27 +30,34 @@ class ConverterWorker < Workling::Base
     recipe
   end
   
-  def convert params
-	
+  def convert params	
     errors = []
     video = Video.find params[:video_id]
+		puts "#{RAILS_ENV}"
+		puts "* Converter takes the stage, acting on #{video.id}"
     input = video.uploaded_file_path
     config.each do |format|
-			puts video.encode_to.include? format[0].to_sym
-			next unless video.encode_to.include? format[0].to_sym
+			next unless video.encode_to.include? format[0]
+			puts "** ...on format #{format[0]}..."
     	output = "#{RAILS_ROOT}/public/videos/#{video.id}/#{format[0]}.#{format[1]['format']}"
       system recipe(format[1].merge({'input' => input, 'output' => output }))
       
       #checks for encoding errors using a inspector.
       inspector = RVideo::Inspector.new :file => output
       if inspector.unknown_format? or inspector.duration.nil?      
-      	errors << "Encoding of #{resolution} reported no erros, but resulting encoded file wasn't readable." 
+      	msg = "Encoding of #{resolution} wasn't readable."
+				errors << msg
+				puts "** " + msg
+			else
+				puts "** ..done."
      	end      
     end
     
     if errors.empty?
+			puts "* Handling to publisher..."
       video.publish!
     else
+			puts "Errors found while encoding, aborting."
       video.worker_errors.push! errors
       video.save! and video.error!
     end

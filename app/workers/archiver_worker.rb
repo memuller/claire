@@ -51,11 +51,12 @@ class ArchiverWorker < Workling::Base
 		#no options provided - does nothing.
 		else
 			@video.done!
+			return
 		end
 		
 		# were there errors?
 		unless ex == true
-			LOGGER.error "OS reported errors while archiving, see operation logs above."
+			puts "OS reported errors while archiving, see operation logs above."
 			errors << "Errors found while archiving the raw file."
 		end				 			 
 		    
