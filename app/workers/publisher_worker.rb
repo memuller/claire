@@ -8,7 +8,7 @@ class PublisherWorker < Workling::Base
 		puts "* Publisher takes the stage, acting on #{video.id}..."
  		# loops on all publishers specified on the config file
 		config.each do |item|
-			next unless video.publish_to.include? item.first
+			next unless video.publish_to.include? item.first.to_sym
 			puts "** ...#{item.first}..."
 			# gets a publisher from the Publishers module with the specified name
 			klass = Publishers.const_get(item.first.classify)
@@ -34,7 +34,6 @@ class PublisherWorker < Workling::Base
 		end
     
     if errors.empty?
-			puts video.default.name
       video.archive!
 			puts "* Handling to archiver..."
     else
