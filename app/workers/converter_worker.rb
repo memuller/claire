@@ -8,20 +8,12 @@ class ConverterWorker < Workling::Base
 	#builds a valid recipe mixing provided params with the default ones.
   def recipe args={}
     raise ArgumentError, "Requires input and output files." unless args.include? 'input' and args.include? 'output' and args.include? 'format'
-    params = {
-	  	'audio_bitrate' => 64*1000,
-			'audio_frequency' => 22050,
-			'video_bitrate' => 200*1000,
-			'fps' => 29.87,
-			'resolution' => '480x270'	
-		}
-		params.merge! args
-    
-    #audio params...
-    recipe = "ffmpeg -i #{params['input']} -f #{params['format']} -ar #{params['audio_frequency']} -ab #{params['audio_bitrate']} "
-    #video params...
-    recipe += "-r #{params['fps']} -s #{params['resolution']} -vb #{params['video_bitrate']}"
-    #if it's an flv, use flvtool for tagging
+		
+    recipe = "ffmpeg -i #{params['input']} -f #{params['format']}"
+    params['options'].each do |k,v|
+    	recipe += "-#{k} #{v}"
+    end
+
     if params['format'] == "flv"
       recipe += " - | flvtool2 -U stdin #{params['output']}"
     else

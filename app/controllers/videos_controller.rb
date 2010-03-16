@@ -6,13 +6,8 @@ class VideosController < ApplicationController
   
 	def search
 		set_pagination 				
-		@results = Search.new(params).results		
-		@search_terms = ""
-		params.to_a.each do |item|
-			@search_terms += ", "
-			@search_terms += item.join(" => ")
-		end
-		
+		set_search_terms
+		get_results				
 		respond_to do |wants|
 			wants.xml
 		end
@@ -87,9 +82,10 @@ class VideosController < ApplicationController
 	def rate
 		video = Video.find params[:id]
 		params[:rating] = params[:value] if params[:value]
+		params[:rating] = params[:rating].to_i
 		video.rate! params[:rating]
 	rescue
-		render_text "ERROR", :status => 400
+		render_text 'ERROR', :status => 400
 	end
 	
 	def view
@@ -98,7 +94,27 @@ class VideosController < ApplicationController
 		render_text "OK", :status => 200
 	rescue
 		render_text "ERROR", :status => 400
-	end		
+	end
+	
+	def top_rated
+    params[:order] = "rating DESC"
+    set_pagination and set_search_terms and get_results
+    render "videos/search"
+	end
+	
+	def most_viewed
+    params[:order] = "views DESC"
+    set_pagination and set_search_terms and get_results
+    render "videos/search"
+	end
+	
+	def specials
+		params[:special] = true
+    set_pagination and set_search_terms and get_results
+    render "videos/search"
+	end
+	
+			
 	
 	def reset 
 		@video = Video.find params[:id]

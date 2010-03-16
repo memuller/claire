@@ -8,12 +8,9 @@ general:
 formats:
   flv-hd:
     name: FLV hi-def (960x540)
-    resolution: 960x540
     format: flv
-  flv-mq:
-    name: FLV low-def (480x270) 
-    resolution: 480x270
-    format: flv
+    options:
+      
 
 publishers:
   youtube:

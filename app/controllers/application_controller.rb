@@ -18,6 +18,18 @@ class ApplicationController < ActionController::Base
 		400
 	end
 	
+	def set_search_terms
+		@search_terms = ""
+		params.to_a.each do |item|
+			@search_terms += ", "
+			@search_terms += item.join(" => ")
+		end
+	end
+	
+	def get_results
+		@results = Search.new(params).results
+	end
+	
 	def set_pagination
 		params[:limit] = CONFIG['general']['per_page'] unless params[:limit]
 		params[:page] = params[:page] ? params[:page].to_i : 1 
