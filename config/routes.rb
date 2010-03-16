@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.connect 'videos/search/.:format', :controller => 'videos', :action => 'search' 
 	map.connect 'videos/top_rated', :controller => 'videos', :action => 'top_rated'
-	map.connect 'videos/specials', :controller => 'videos', :action => 'specials',   
+	map.connect 'videos/specials', :controller => 'videos', :action => 'specials'   
 	map.resources :videos
 
   map.resources :subcategories
