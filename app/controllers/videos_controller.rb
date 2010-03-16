@@ -1,5 +1,4 @@
 class VideosController < ApplicationController
-	caches_page :show
   def index
 		@videos = Video.all
   end
