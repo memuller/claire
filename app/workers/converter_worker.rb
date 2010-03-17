@@ -10,7 +10,9 @@ class ConverterWorker < Workling::Base
     raise ArgumentError, "Requires input and output files." unless args.include? 'input' and args.include? 'output' and args.include? 'format'
 		
     recipe = "ffmpeg -i #{args['input']} -f #{args['format']}"
-    args['options'].each do |k,v|
+    
+    args['options'] = {} if args['options'].nil?
+		args['options'].each do |k,v|
     	recipe += "-#{k} #{v}"
     end
 
@@ -25,14 +27,14 @@ class ConverterWorker < Workling::Base
   def convert params	
     errors = []
     video = Video.find params[:video_id]
-		puts "#{RAILS_ENV}"
 		puts "* Converter takes the stage, acting on #{video.id}"
     input = video.uploaded_file_path
     config.each do |format|
-			next unless video.encode_to.include? format[0]
+			next unless video.encode_to.include? format.first
 			puts "** ...on format #{format[0]}..."
     	output = "#{RAILS_ROOT}/public/videos/#{video.id}/#{format[0]}.#{format[1]['format']}"
-      system recipe(format[1].merge({'input' => input, 'output' => output }))
+			time = Time.now	
+      system recipe(format.last.merge({'input' => input, 'output' => output }))
       
       #checks for encoding errors using a inspector.
       inspector = RVideo::Inspector.new :file => output
@@ -41,7 +43,10 @@ class ConverterWorker < Workling::Base
 				errors << msg
 				puts "** " + msg
 			else
-				puts "** ..done."
+				time = Time.now - time
+				video.encode_times.merge!({format.first => time})
+				video.save!
+				puts "** ..done on #{time} seconds."
      	end      
     end
     

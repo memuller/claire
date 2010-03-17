@@ -6,11 +6,17 @@ general:
     short_description_length: 40
 
 formats:
-  flv-hd:
-    name: FLV hi-def (960x540)
+  flv-h264:
+    name: FLV H264
     format: flv
     options:
-      
+      vcodec: libx264
+      vpre:
+      acodec:
+  flv-h263:
+    name: FLV H263/Soreson
+    format: flv
+    options:      
 
 publishers:
   youtube:

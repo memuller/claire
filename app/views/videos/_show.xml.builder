@@ -1,7 +1,7 @@
 video = @video unless video 
 xml.item do
 	xml.title		video.title
-	xml.link		video_url
+	xml.link		video_url video
 	#here goes the contet itself
 	if video.done?
   	xml.tag! "media:content", :url => video.encoded_video_url(video.formats.first), 

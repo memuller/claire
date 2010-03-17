@@ -4,7 +4,7 @@ class Video
   include Paperclip
 
   #general info
-  key :title, String
+  key :title, String, :required => true
   key :subtitle, String
   key :description, String, :default => ""
   key :tags, Array, :default => []
@@ -18,7 +18,8 @@ class Video
 	key :publish_to, Array, :default => []
 	key :archive_to, Boolean, :default => []
 	key :encode_to, Array, :default => []
-  key :formats, Array
+	key :encode_times, Hash, :default => {}
+  key :formats, Array, :default => []
 	#metadata
   key :duration, Integer
 
@@ -139,10 +140,9 @@ class Video
 
 	#removes a video from the front page
  	def self.unespecial! id
-		video = Video.find id rescue return false
+		video = Video.find id
 		if video
-			video.special = false
-			video.save!
+			video.update_attributes! :special => false
 		end
 	end
 

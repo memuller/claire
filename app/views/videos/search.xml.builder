@@ -7,8 +7,7 @@ xml.channel do
 		xml.link category_url @category
 	else
 		xml.title "Project St. Claire - Searching for: #{@search_terms}"
-	end
-	
+	end     
 	xml.text!("#{render :partial => 'show', :collection => @results, :as => :video, :format => 'xml'}")	
 
 	

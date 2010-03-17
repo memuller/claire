@@ -46,9 +46,9 @@ class Search
 			 	
 				params = {attribute => value}				
 				params = add_range(params)
-				puts params.to_yaml
+				#puts params.to_yaml
 				params = add_options(params)
-				puts params.to_yaml
+				#puts params.to_yaml
 				@results = @klass.all params
 			end
 			@i += 1				

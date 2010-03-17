@@ -33,9 +33,8 @@ class VideosController < ApplicationController
   
   def create
     @video = Video.new(params[:video])
-		debugger
     if @video.save
-			Video.unespecial! params[:special_to_remove] if @video.special?
+			Video.unespecial! params[:video][:special_to_remove] if @video.special?
       @video.start_jobs!
       flash[:notice] = "Successfully created video."
       redirect_to @video
@@ -51,7 +50,7 @@ class VideosController < ApplicationController
   def update
     @video = Video.find(params[:id])
     if @video.update_attributes(params[:video])
-			Video.unespecial! params[:special_to_remove] if @video.special? 
+			Video.unespecial! params[:video][:special_to_remove] if @video.special? 
       flash[:notice] = "Successfully updated video."
       redirect_to @video
     else
@@ -70,7 +69,7 @@ class VideosController < ApplicationController
 		render :text => "" and return if params[:special] == 'null'
 		specials = Video.all :special => true
 		video = Video.find params[:video_id]
-		if specials.size > 5
+		if specials.size >= 5
 			unless video and specials.include? video
 				render :partial => "special_remove", :locals => {:specials => specials} and return
 			end
@@ -110,7 +109,9 @@ class VideosController < ApplicationController
 	def specials
 		params[:special] = true
     set_pagination and set_search_terms and get_results
-    render "videos/search"
+    respond_to do |wants|
+    	wants.xml{ render "search" }
+    end
 	end
 	
 			
