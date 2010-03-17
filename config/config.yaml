@@ -11,12 +11,20 @@ formats:
     format: flv
     options:
       vcodec: libx264
-      vpre:
-      acodec:
+      vpre: hq
+      crf: 24
+      threads: 3
+      acodec: libfaac
+      ab: 128k
+      
   flv-h263:
     name: FLV H263/Soreson
     format: flv
-    options:      
+    options:
+      ab: 128k
+      ar: 44100
+      vb: 200k
+      r: 30       
 
 publishers:
   youtube:
