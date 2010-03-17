@@ -13,13 +13,13 @@ class ConverterWorker < Workling::Base
     
     args['options'] = {} if args['options'].nil?
 		args['options'].each do |k,v|
-    	recipe += "-#{k} #{v}"
+    	recipe += " -#{k} #{v}"
     end
 
     if args['format'] == "flv"
       recipe += " - | flvtool2 -U stdin #{args['output']}"
     else
-      recipe += "-y #{args['output']}"    
+      recipe += " -y #{args['output']}"    
     end
     recipe
   end
