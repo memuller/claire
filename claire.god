@@ -6,7 +6,12 @@ module God
 			def initialize; super; end 
 			def valid?; true; end
 			def test
-				file = %x[tail -1 #{God.pid_file_directory}/workling.output].include? "Exiting"
+				file = %x[tail -1 #{God.pid_file_directory}/workling.output]
+				if file.include? "Exiting" or file.include? "from script/workling_client"
+					true
+				else
+					false
+				end 
 			rescue
 				true
 			end
