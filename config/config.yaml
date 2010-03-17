@@ -10,12 +10,9 @@ formats:
     name: FLV H264
     format: flv
     options:
-      vcodec: libx264
-      vpre: hq
-      crf: 24
+      vcodec: libx264 -vpre hq -crf 26
       threads: 3
-      acodec: libfaac
-      ab: 128k
+      acodec: libfaac -ab 128k
       
   flv-h263:
     name: FLV H263/Soreson
