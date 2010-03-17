@@ -24,7 +24,7 @@ formats:
       ab: 128k
       ar: 44100
       vb: 200k
-      r: 30       
+      #r: 30       
 
 publishers:
   youtube:

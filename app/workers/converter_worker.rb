@@ -15,7 +15,7 @@ class ConverterWorker < Workling::Base
 		args['options'].each do |k,v|
     	recipe += " -#{k} #{v}"
     end
-
+    puts recipe
     if args['format'] == "flv"
       recipe += " - | flvtool2 -U stdin #{args['output']}"
     else
