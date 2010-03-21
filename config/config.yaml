@@ -1,7 +1,6 @@
 general:
   host: localhost:3000
-  per_page: 10
-  
+  per_page: 10  
   videos:
     short_description_length: 40
 
@@ -11,16 +10,16 @@ formats:
     format: flv
     options:
       vcodec: libx264 -vpre hq -crf 26
-      threads: 3
+      threads: 4
       acodec: libfaac -ab 128k
       
   flv-h263:
     name: FLV H263/Soreson
     format: flv
     options:
-      ab: 128k
+      ab: 256k
       ar: 44100
-      vb: 200k
+      vb: 512k
       #r: 30       
 
 publishers:
