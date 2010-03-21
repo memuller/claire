@@ -1,0 +1,80 @@
+p>. "Home":/projects/claire/wiki - "Status":/projects/claire/milestones - [[Descrição Técnica]] - [[Diagramas]] - [[API]] - "Online":/projects/online-cn/wiki - "IPTV":/projects/iptv/wiki - [[bibliography:Referências Bibliográficas]]
+
+Para acessar os vídeos armazenados no projeto St. Claire, aplicativos devem usar sua *API*.
+
+A API do projeto utiliza o padrão REST, em chamadas HTTP não-autenticadas. Todas as chamadas retornam respostas. Caso o request tenha sucesso, esta resposta é um XML formatado no padrão MediaRSS e ATOM. Em caso de erro, as respostas terão o código do erro em seu cabeçalho e, se aplicável, uma descrição do mesmo em seu corpo.
+ 
+Antes de usá-la, esteja atento a:
+* [[Termos de Uso]]
+* [[Mudanças previstas na API]]
+
+h3. Alterações e avisos
+
+Você deve assinar um RSS do "Blog":/projects/claire/blog , aonde comunicados importantes sobre o sistema e API - como downtime, mudanças, etc - são publicadas.
+
+A formatação das respostas aos requests podem ser alteradas sem aviso prévio, caso estas alterações estejam previstas no padrão MediaRSS ou ATOM. Alterações fora deste padrão serão previamente comunicadas.
+
+h1. Vídeos
+
+Informações de um vídeo podem ser obtidas no endereço /videos/id.xml . Um vídeo é um item MediaRSS, com as seguintes tags:
+
+*   *title* - seu título.
+*   *link* - sua URI.
+*   *media:content* - seus conteúdos - ou seja, o vídeo em si. Existe somente se o encoding do vídeo estiver sido concluído. Haverá uma entrada para cada vídeo codificado. Seus atributos são:
+**    _url:_ URL do arquivo deste formato.
+**    _type:_ MIMEtype do formato.
+**    _duration:_ duração do vídeo.
+*   *media:thumbnail* - thumbnails do vídeo, como imagens JPEG. Vários podem estar presentes. Seus atributos são:
+**    _url:_ URL do thumbnail.
+**    _type:_ MIMEtype do thumbnail.
+**    _width:_ largura do thumbnail.
+**    _height:_ altura do thumbnail.
+*   *media:category* - nome da categoria pertencente.
+*   *media:keywords* - tags do vídeo, separadas por vírgulas.
+*   *media:description* - texto descritivo do vídeo.
+*   *media:community* - contém informações "sociais" e estatísticas sobre o vídeo. Possui as tags:
+**    *media:starRating* - se refere a "nota" do vídeo, em uma categorização de 0 a 5 estrelas.
+***     _average:_ média desta nota.
+**    *media:statistics* - estatísticas diversas.
+***     _views:_ número de vezes que o vídeo foi visualizado.
+*   *related* - contém uma lista de links para vídeos relacionados ao mesmo. Cada vídeo é uma tag item com atributos _link_, _title_ e _thumbnail_, como descritos acima.      
+
+h1. Listagems de vídeos
+
+Listas de vídeos são exibidas como resultados de buscas, ou conteúdo de categorias, subcategorias ou canais. O meio de obtenção destas listas será descrito nas seções correspondentes.
+
+Uma lista é um canal MediaRSS devidamente formatado, com os vídeos sendo apresentados como tag *_item_*. Além disso, possuem:
+
+*   *atom:link rel=next* - link para a próxima página de vídeos da busca/listagem. _*Este link está sempre presente, independente da existência ou não de mais resultados.*_ Ou seja, no momento, o único meio de checar a existência de uma próxima página é efetivamente acessando este link.
+
+*   *atom:link rel=previous* - link para a página anterior da listagem/busca. É exibido somente quando tal página existir (eg. ele não está presenta na primeira página).
+
+h1. Categorias
+
+Uma lista de todas as categorias pode ser obtida no endereço _/categories.xml_ . Esta lista possui cada categoria apresentada como tag item, possuindo _*title*_, _*link*_, *_description_* e *_num_videos_*.
+
+Acessando o link de uma categoria específica ( _que segue o padrão /categories/id.xml_ ), uma lista dos vídeos da mesma é exibida. A lista segue o padrão acima especificado; possuindo, adicionalmente, as tags title, description, num_videos, e header. Header possui um link para uma imagem representativa da categoria.
+
+h1. Subcategorias
+
+São exibidas de forma idêntica às categorias, exceto em sua URI, que é /categories/idCat/id.xml .
+
+h1. Buscas
+
+--documentando...
+
+h1. Atalhos
+
+Para maior conveniência, as buscas mais frequentemente realizadas são fornecidas como um recurso separado, poupando o trabalho de elaboração manual de queries. Estes atalhos possuem um tempo de resposta mais rápido do que a busca correspondente. Os atalhos são:
+
+* /videos/top_rated - vídeos ordenados por ordem decrescente de média de qualificações.
+* /videos/most_viewed - vídeos ordenados por ordem decrescente de número de visualizações.
+* /videos/specials - vídeos marcados como especiais.
+
+
+  
+
+ 
+
+
+

@@ -1,6 +1,5 @@
 p>. "Home":/projects/claire/wiki - "Status":/projecs/claire/milestones - [[Descrição Técnica]] - [[Diagramas]] - [[API]] - "Online":/projects/online-cn/wiki - "IPTV":/projects/iptv/wiki - [[bibliography:Referências Bibliográficas]]
 
-
 Devido a amplitude intrínseca do projeto, o mesmo possui uma estrutura igualmente complexa, composta de vários processos distintos.
 
 A vantagem de tal estrutura é que cada componente do sistema é completamente isolada das demais, ou seja, em caso de falhas, é preciso encerrar e reiniciar somente um processo. Significa também que cada parte pode ser executada em um equipamento separado; e podem haver mais de uma instância do mesmo componente. Por exemplo, caso as tarefas de Encoding estejam sendo muito taxativas ao servidor, este componente pode ser movido para outro equipamento. Caso isso ainda não seja suficiente, várias instâncias dele podem ser executadas.
