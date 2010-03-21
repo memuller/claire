@@ -1,13 +1,18 @@
-video = @video unless video 
+video = @video unless video
+params[:full] = true unless params[:full] == false 
 xml.item do
 	xml.title		video.title
 	xml.link		video_url video
 	#here goes the contet itself
+	
 	if video.done?
-  	xml.tag! "media:content", :url => video.encoded_video_url(video.formats.first), 
-													:type => "video/flv", 
-													:duration => video.duration
+		video.encoded_videos_url.each do |k,v|
+			xml.tag! "media:content", :url => v, 
+														:type => "video/flv", 
+														:duration => video.duration
+		end  	
 	end
+	
 	#shows all thumbnails or just the default one												 
   if params[:full]
 		video.video.styles.each do |thumb|

@@ -8,7 +8,7 @@ xml.channel do
 	else
 		xml.title "Project St. Claire - Searching for: #{@search_terms}"
 	end     
-	xml.text!("#{render :partial => 'show', :collection => @results, :as => :video, :format => 'xml'}")	
+	xml.text!("#{render :partial => 'show', :collection => @results, :as => :video, :format => 'xml', :locals => {:full => false}}")	
 
 	
 	xml.atom:link, :rel => "previous", :href => @previous_url if @previous_url
