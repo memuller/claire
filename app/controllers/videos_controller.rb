@@ -11,8 +11,8 @@ class VideosController < ApplicationController
 			wants.xml
 		end
 		
-	rescue Exception => e
-		render :text => e.message, :status => get_status_code(e)
+	#rescue Exception => e
+		#render :text => e.message, :status => get_status_code(e)
 	end
 
   def show
@@ -97,13 +97,17 @@ class VideosController < ApplicationController
 	def top_rated
     params[:order] = "rating DESC"
     set_pagination and set_search_terms and get_results
-    render "videos/search"
+    respond_to do |wants|
+    	wants.xml{ render "search" }
+    end
 	end
 	
 	def most_viewed
     params[:order] = "views DESC"
     set_pagination and set_search_terms and get_results
-    render "videos/search"
+    respond_to do |wants|
+    	wants.xml{ render "search" }
+    end
 	end
 	
 	def specials
