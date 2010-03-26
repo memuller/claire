@@ -1,10 +1,10 @@
 video = @video unless video
 params[:full] = true unless params[:full] == false 
-xml.item do
+xml.item do |v|
 	xml.title		video.title
 	xml.link		video_url video
 	#here goes the contet itself
-	debugger
+	#debugger
 	unless video.formats.empty?
 		video.formats.each do |v|
 			xml.tag! "media:content", :url => video.encoded_video_url(v), 

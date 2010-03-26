@@ -1,4 +1,4 @@
-xml.channel do
+xml.channel do |xml|
 	if @category
 		xml.title @category.name
 		xml.description @category.description
@@ -8,7 +8,7 @@ xml.channel do
 	else
 		xml.title "Project St. Claire - Searching for: #{@search_terms}"
 	end     
-	xml.text!("#{render :partial => 'videos/show', :collection => @results, :as => :video, :format => 'xml', :locals => {:full => false}}")	
+	xml << render(:partial => 'videos/show', :collection => @results, :as => :video, :format => 'xml', :locals => {:full => false})	
 
 	
 	xml.atom:link, :rel => "previous", :href => @previous_url if @previous_url
