@@ -42,7 +42,7 @@ class Category
 	# fetches all of this category's videos
 	def videos args={}
 		args[:order] ||= "created_at DESC"
-		args.push!({:category_id => id})
-		Videos.all args 
+		args.merge!({:category_id => id})
+		Video.all args 
 	end
 end

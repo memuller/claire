@@ -2,3 +2,5 @@ log/*.log
 log/*.output
 log/*.pid
 /public/videos
+video.cn.tmproj
+*.html

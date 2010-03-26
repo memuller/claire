@@ -180,8 +180,8 @@ class Video
 	    end
 			#updates the indexable texts field with desc, title and subtitle
 			title = video.title.split(" ")
-			description = video.description.split(" ")
-			video.texts = (title | description | video.tags).uniq!
+			description = video.description.split(" ")                                             
+			video.texts = (video.title.split(" ") | video.description.split(" ") | video.tags).uniq
 			#maps string values (again, comming from forms) to symbols.
 			video.publish_to.map!(&:to_sym)
 		}

@@ -4,10 +4,10 @@ xml.item do
 	xml.title		video.title
 	xml.link		video_url video
 	#here goes the contet itself
-	
-	if video.done?
-		video.encoded_videos_url.each do |k,v|
-			xml.tag! "media:content", :url => v, 
+	debugger
+	unless video.formats.empty?
+		video.formats.each do |v|
+			xml.tag! "media:content", :url => video.encoded_video_url(v), 
 														:type => "video/flv", 
 														:duration => video.duration
 		end  	

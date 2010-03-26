@@ -43,7 +43,7 @@ class Search
 					@results = @klass.all params					
 				end
 			else
-			 	
+			 	value = /#{value}/i if attribute == :texts
 				params = {attribute => value}				
 				params = add_range(params)
 				#puts params.to_yaml
@@ -70,7 +70,7 @@ class Search
 			:category_name => 1,
 			:subcategory_name => 2,
 			:tags => 3,
-			:text => 4			   
+			:texts => 4			   
 		}
 		params_arr = @params.sort{ |a,b| sorting_weight[a[0]] <=> sorting_weight[b[0]] }
 		@params = OrderedHash.new
@@ -80,8 +80,7 @@ class Search
 	end
 	
 	def initialize params={}
-		@params = {}
-		#debugger                         
+		@params = {}                         
 		params[:limit] = CONFIG['general']['per_page'] if params[:limit].nil?
 		if params[:page]
 			params[:offset] = ( (params[:page] - 1) * params[:limit] ) - 1

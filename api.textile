@@ -69,12 +69,4 @@ Para maior conveniência, as buscas mais frequentemente realizadas são fornecid
 
 * /videos/top_rated - vídeos ordenados por ordem decrescente de média de qualificações.
 * /videos/most_viewed - vídeos ordenados por ordem decrescente de número de visualizações.
-* /videos/specials - vídeos marcados como especiais.
-
-
-  
-
- 
-
-
-
+* /videos/specials - vídeos marcados como especiais. 

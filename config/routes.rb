@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+	map.root :controller => 'videos' 
   map.connect 'videos/search/.:format', :controller => 'videos', :action => 'search' 
 	map.connect 'videos/top_rated/.:format', :controller => 'videos', :action => 'top_rated'
 	map.connect 'videos/most_viewed/.:format', :controller => 'videos', :action => 'most_viewed'

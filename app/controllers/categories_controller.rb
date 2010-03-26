@@ -13,8 +13,8 @@ class CategoriesController < ApplicationController
 				render 'videos/search', :format => 'xml'
 			end						
 		end
-	rescue Exception => e
-		render :text => e.message, :status => get_status_code(e)
+	#rescue Exception => e
+		#render :text => e.message, :status => get_status_code(e)
   end
   
   def new
