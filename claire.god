@@ -46,7 +46,7 @@ God.watch do |t|
       m.times = [1,5]
     end    
     restart.condition :cpu_usage do |c|
-      c.above = 50.percent
+      c.above = 80.percent
       c.times = 3
     end
   end
@@ -72,6 +72,7 @@ God.watch do |t|
   t.dir = RAILS_ROOT
   #t.gid = RAILS_GROUP
   #t.uid = RAILS_USER #needs to run as such to ensure local gems are okay
+	# ops, user gems aren't working. Oh well, we need to run those as root anyway, so whatever
   t.start = "#{RUBY_BIN} script/workling_client start"
   t.stop = "#{RUBY_BIN} script/workling_client stop"
   t.stop = "#{RUBY_BIN} script/workling_client restart"
@@ -115,15 +116,22 @@ God.watch do |t|
   end
 end
 
+#== MONGREL
+# starts up an daemonized mongrel instance
 God.watch do |t|
 	t.name = "mongrel"
-	t.start = "ruby script/server --debugger"
+	t.dir = RAILS_ROOT
+	t.start = "mongrel_rails start -c #{RAILS_ROOT} -P #{RAILS_ROOT}/log/mongrel.pid -p 3000 -d"
+	t.restart = "mongrel_rails restart -c #{RAILS_ROOT} -P #{RAILS_ROOT}/log/mongrel.pid"
+	t.stop = "mongrel_rails start -c #{RAILS_ROOT} -P #{RAILS_ROOT}/log/mongrel.pid -w 5"
 	t.start_grace = 30.seconds
+	t.pid_file = File.join(God.pid_file_directory, "mongrel.pid")
+  t.behavior(:clean_pid_file)
 	
-	#t.start_if do |start|
-  #  start.condition :process_running do |p|
-  #    p.interval = 20.seconds
-  #    p.running = false
-  #  end    
-  #end
+	t.start_if do |start|
+    start.condition :process_running do |p|
+      p.interval = 20.seconds
+      p.running = false
+    end    
+  end
 end
