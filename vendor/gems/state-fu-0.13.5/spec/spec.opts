@@ -1,0 +1,8 @@
+--colour
+--loadby
+mtime
+--reverse
+--require 
+spec/custom_formatter.rb
+--format 
+progress

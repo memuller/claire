@@ -1,0 +1,177 @@
+--- !ruby/object:Gem::Specification 
+name: state-fu
+version: !ruby/object:Gem::Version 
+  version: 0.13.5
+platform: ruby
+authors: 
+- David Lee
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-01-07 00:00:00 -02:00
+default_executable: 
+dependencies: []
+
+description: A rich library for state-oriented programming with state machines / workflows
+email: david@rubyist.net.au
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- LICENSE
+- README.textile
+files: 
+- Rakefile
+- lib/binding.rb
+- lib/blueprint.rb
+- lib/event.rb
+- lib/executioner.rb
+- lib/hooks.rb
+- lib/interface.rb
+- lib/lathe.rb
+- lib/machine.rb
+- lib/method_factory.rb
+- lib/persistence.rb
+- lib/persistence/active_record.rb
+- lib/persistence/attribute.rb
+- lib/persistence/base.rb
+- lib/persistence/relaxdb.rb
+- lib/persistence/session.rb
+- lib/sprocket.rb
+- lib/state-fu.rb
+- lib/state.rb
+- lib/support/active_support_lite/array.rb
+- lib/support/active_support_lite/array/access.rb
+- lib/support/active_support_lite/array/conversions.rb
+- lib/support/active_support_lite/array/extract_options.rb
+- lib/support/active_support_lite/array/grouping.rb
+- lib/support/active_support_lite/array/random_access.rb
+- lib/support/active_support_lite/array/wrapper.rb
+- lib/support/active_support_lite/blank.rb
+- lib/support/active_support_lite/cattr_reader.rb
+- lib/support/active_support_lite/keys.rb
+- lib/support/active_support_lite/misc.rb
+- lib/support/active_support_lite/module.rb
+- lib/support/active_support_lite/module/delegation.rb
+- lib/support/active_support_lite/object.rb
+- lib/support/active_support_lite/string.rb
+- lib/support/active_support_lite/symbol.rb
+- lib/support/applicable.rb
+- lib/support/arrays.rb
+- lib/support/core_ext.rb
+- lib/support/exceptions.rb
+- lib/support/has_options.rb
+- lib/support/logging.rb
+- lib/support/no_stdout.rb
+- lib/support/plotter.rb
+- lib/support/vizier.rb
+- lib/tasks/spec_last.rake
+- lib/tasks/state_fu.rake
+- lib/transition.rb
+- lib/transition_query.rb
+- spec/custom_formatter.rb
+- spec/features/active_record_auto_save_spec.rb
+- spec/features/binding_and_transition_helper_mixin_spec.rb
+- spec/features/machine_alias_spec.rb
+- spec/features/not_requirements_spec.rb
+- spec/features/plotter_spec.rb
+- spec/features/serialization_spec.rb
+- spec/features/shared_log_spec.rb
+- spec/features/singleton_machine_spec.rb
+- spec/features/state_and_array_options_accessor_spec.rb
+- spec/features/transition_boolean_comparison_spec.rb
+- spec/features/when_methods_are_defined_spec.rb
+- spec/helper.rb
+- spec/integration/active_record_persistence_spec.rb
+- spec/integration/binding_extension_spec.rb
+- spec/integration/class_accessor_spec.rb
+- spec/integration/event_definition_spec.rb
+- spec/integration/example_01_document_spec.rb
+- spec/integration/example_02_string_spec.rb
+- spec/integration/instance_accessor_spec.rb
+- spec/integration/lathe_extension_spec.rb
+- spec/integration/machine_duplication_spec.rb
+- spec/integration/relaxdb_persistence_spec.rb
+- spec/integration/requirement_reflection_spec.rb
+- spec/integration/state_definition_spec.rb
+- spec/integration/transition_spec.rb
+- spec/spec.opts
+- spec/spec_helper.rb
+- spec/state_fu_spec.rb
+- spec/units/binding_spec.rb
+- spec/units/event_spec.rb
+- spec/units/exceptions_spec.rb
+- spec/units/lathe_spec.rb
+- spec/units/machine_spec.rb
+- spec/units/method_factory_spec.rb
+- spec/units/sprocket_spec.rb
+- spec/units/state_spec.rb
+- LICENSE
+- README.textile
+has_rdoc: true
+homepage: http://github.com/davidlee/state-fu
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --charset=UTF-8
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+requirements: []
+
+rubyforge_project: state-fu
+rubygems_version: 1.3.5
+signing_key: 
+specification_version: 3
+summary: A rich library for state-oriented programming with state machines / workflows
+test_files: 
+- spec/custom_formatter.rb
+- spec/features/active_record_auto_save_spec.rb
+- spec/features/binding_and_transition_helper_mixin_spec.rb
+- spec/features/machine_alias_spec.rb
+- spec/features/not_requirements_spec.rb
+- spec/features/plotter_spec.rb
+- spec/features/serialization_spec.rb
+- spec/features/shared_log_spec.rb
+- spec/features/singleton_machine_spec.rb
+- spec/features/state_and_array_options_accessor_spec.rb
+- spec/features/transition_boolean_comparison_spec.rb
+- spec/features/when_methods_are_defined_spec.rb
+- spec/helper.rb
+- spec/integration/active_record_persistence_spec.rb
+- spec/integration/binding_extension_spec.rb
+- spec/integration/class_accessor_spec.rb
+- spec/integration/event_definition_spec.rb
+- spec/integration/example_01_document_spec.rb
+- spec/integration/example_02_string_spec.rb
+- spec/integration/instance_accessor_spec.rb
+- spec/integration/lathe_extension_spec.rb
+- spec/integration/machine_duplication_spec.rb
+- spec/integration/relaxdb_persistence_spec.rb
+- spec/integration/requirement_reflection_spec.rb
+- spec/integration/state_definition_spec.rb
+- spec/integration/transition_spec.rb
+- spec/spec_helper.rb
+- spec/state_fu_spec.rb
+- spec/units/binding_spec.rb
+- spec/units/event_spec.rb
+- spec/units/exceptions_spec.rb
+- spec/units/lathe_spec.rb
+- spec/units/machine_spec.rb
+- spec/units/method_factory_spec.rb
+- spec/units/sprocket_spec.rb
+- spec/units/state_spec.rb
