@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-
+  before_filter :authenticate, :except => :can_be_special
 	def index
 		@videos = Video.all
   end

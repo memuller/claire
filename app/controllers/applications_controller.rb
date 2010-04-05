@@ -1,5 +1,5 @@
 class ApplicationsController < ApplicationController
-    
+  before_filter :authenticate
   def redirector
 		app = Application.find_by_username params[:appname]
 		params.merge!({:owner_id => app.id})

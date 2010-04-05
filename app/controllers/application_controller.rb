@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
 	attr_reader :current_user, :force_auth	
-	before_filter :authenticate
 	private
 		
 	def authenticate

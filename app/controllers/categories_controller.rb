@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  
+  before_filter :authenticate, :except => :get_subcategories_menu
   def index
     @categories = Category.all    
   end
