@@ -1,5 +1,6 @@
 class VideosController < ApplicationController
-  def index
+
+	def index
 		@videos = Video.all
   end
   

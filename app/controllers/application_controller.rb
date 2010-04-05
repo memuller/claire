@@ -7,7 +7,18 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+	attr_reader :current_user, :force_auth	
+	before_filter :authenticate
 	private
+		
+	def authenticate
+		Application.auth(self)
+	end
+	
+	def force_auth!
+		@force_auth = true
+	end
+        
 	
 	def get_status_code error_message
 		code = error_message.match(/\(.*\)/)[0]
@@ -27,6 +38,7 @@ class ApplicationController < ActionController::Base
 	end
 	
 	def get_results
+		params.merge!({:owner_id => @current_user.id}) if @current_user
 		@results = Search.new(params).results
 	end
 	

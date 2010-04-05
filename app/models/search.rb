@@ -66,6 +66,7 @@ class Search
 			:order => 10,
 			:offset => 10,
 			:limit => 10,
+			:owner_id => -2,
 			:okay => -1,
 			:category_name => 1,
 			:subcategory_name => 2,
@@ -97,7 +98,7 @@ class Search
 			end
 			@params.merge!({k.to_sym => v})
 		end
-		@params[:what] ||= :videos
+		@params[:what] = :videos unless @params[:what]
 		@klass = @params[:what].to_s.classify.constantize
 		@params.delete :what
 		@params[:okay] = true if @klass = Video and @params[:okay].nil?	

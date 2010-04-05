@@ -118,7 +118,7 @@ class Video
 		raise "Video couldn't be reset since it's raw file is already archived. If there's still need to process something on this video, you should provide a new raw file." unless File.exists? uploaded_file_path
 		# you can't reset it more than 3 times
 		raise "Video reached maximum number of resets (3). Please destroy it, and upload a new one." if resets > 3
-		self.update_attributes! :resets => @resets + 1, :worker_errors => []
+		self.update_attributes! :resets => @resets + 1, :worker_errors => [], :formats => []
 		restart!
 		start_jobs!
 	end

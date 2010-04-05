@@ -1,0 +1,16 @@
+<% title "Program" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @program.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @program.description %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_program_path(@program) %> |
+  <%= link_to "Destroy", @program, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", programs_path %>
+</p>

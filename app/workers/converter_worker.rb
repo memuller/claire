@@ -44,7 +44,7 @@ class ConverterWorker < Workling::Base
 			else
 				time = Time.now - time
 				video.encode_times.merge!({format.first => time})
-				video.formats << format.first
+				video.formats = video.formats.push format.first
 				video.save!
 				puts "** ..done on #{time} seconds."
      	end      

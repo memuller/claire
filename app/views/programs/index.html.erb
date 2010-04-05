@@ -1,0 +1,19 @@
+<% title "Programs" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <% for program in @programs %>
+    <tr>
+      <td><%=h program.name %></td>
+      <td><%=h program.description %></td>
+      <td><%= link_to "Show", program %></td>
+      <td><%= link_to "Edit", edit_program_path(program) %></td>
+      <td><%= link_to "Destroy", program, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Program", new_program_path %></p>

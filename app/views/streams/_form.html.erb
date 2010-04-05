@@ -1,0 +1,20 @@
+<% form_for @stream do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :width %><br />
+    <%= f.text_field :width %>
+  </p>
+  <p>
+    <%= f.label :heigth %><br />
+    <%= f.text_field :heigth %>
+  </p>
+  <p>
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>

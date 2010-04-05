@@ -1,14 +1,25 @@
 ActionController::Routing::Routes.draw do |map|
-	map.root :controller => 'videos' 
-  map.connect 'videos/search/.:format', :controller => 'videos', :action => 'search' 
-	map.connect 'videos/top_rated/.:format', :controller => 'videos', :action => 'top_rated'
-	map.connect 'videos/most_viewed/.:format', :controller => 'videos', :action => 'most_viewed'
-	map.connect 'videos/specials/.:format', :controller => 'videos', :action => 'specials'   
+  map.root :controller => 'videos' 
+  
+  #map.connect 'app/:appname/:klass/:kaction.:format', :controller => :applications, :action => :redirector
+	#map.connect 'app/:appname/:klass.:format', :controller => :applications, :action => :redirector, :
+	map.search_videos 'videos/search/.:format', :controller => :videos, :action => 'search' 
+	map.search_streams 'streams/search/.:format', :controller => :streams, :action => 'search'
+	#video aliased urls
+	map.top_rated_videos 'videos/top_rated/.:format', :controller => :videos, :action => 'top_rated'
+	map.most_viewed_videos 'videos/most_viewed/.:format', :controller => :videos, :action => 'most_viewed'
+	map.special_videos 'videos/specials/.:format', :controller => :videos, :action => 'specials'   
+	
+	#user authentication control
+	map.logout 'logout', :controller => 'applications',	:action => 'logout'
+	map.login 'login', :controller => 'applications', :action => 'login' 
+	
 	map.resources :videos
-
+  map.resources :streams
   map.resources :subcategories
-
   map.resources :categories
+  map.resources :applications
+  map.resources :programs
 
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -49,6 +60,6 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
 end

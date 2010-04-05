@@ -1,0 +1,23 @@
+<% title "Streams" %>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Width</th>
+    <th>Heigth</th>
+    <th>Url</th>
+  </tr>
+  <% for stream in @streams %>
+    <tr>
+      <td><%=h stream.title %></td>
+      <td><%=h stream.width %></td>
+      <td><%=h stream.heigth %></td>
+      <td><%=h stream.url %></td>
+      <td><%= link_to "Show", stream %></td>
+      <td><%= link_to "Edit", edit_stream_path(stream) %></td>
+      <td><%= link_to "Destroy", stream, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Stream", new_stream_path %></p>

@@ -1,0 +1,24 @@
+<% title "Stream" %>
+
+<p>
+  <strong>Title:</strong>
+  <%=h @stream.title %>
+</p>
+<p>
+  <strong>Width:</strong>
+  <%=h @stream.width %>
+</p>
+<p>
+  <strong>Heigth:</strong>
+  <%=h @stream.heigth %>
+</p>
+<p>
+  <strong>Url:</strong>
+  <%=h @stream.url %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_stream_path(@stream) %> |
+  <%= link_to "Destroy", @stream, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", streams_path %>
+</p>

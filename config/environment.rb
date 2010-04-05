@@ -27,10 +27,11 @@ Rails::Initializer.run do |config|
   config.gem "flvtool2", :lib => false
   #for youtube video publishing
   config.gem "youtube-g", :lib => "youtube_g"
-  
+  config.gem 'factory_girl'
+	config.gem 'bcrypt-ruby', :lib => "bcrypt"
   #config.frameworks -= [ :active_record ]
 
-  # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
+  #config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
   config.time_zone = 'UTC'
 
@@ -42,3 +43,4 @@ end
 #MONGO MAPPER CONFIGURATION BLOCK
 MongoMapper.database = "iptv_#{RAILS_ENV}"
 CONFIG = YAML.load_file "#{RAILS_ROOT}/config/config.yaml"  
+CONFIG['general']['media_types'] = CONFIG['general']['media_types'].split(' ')

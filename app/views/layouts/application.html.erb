@@ -9,10 +9,19 @@
   </head>
   <body>
     <div id='container' style="height:25px">
+      <%# this is the user login/logout banner. %>
+      <div style="float:left;">
+        <% if @current_user %>
+          Welcome, <%= @current_user.name %>. <%= link_to "Logout.", '/logout'%>        
+        <% else %>
+          You're not logged in. <%= link_to "Login now.", login_url %>
+        <% end %>
+      </div>
+        
       <div style="float:right;">
         <%= image_tag "cn-logo.gif", :style => "float:right;" %>
         <div style=" padding-top:10px;padding-right:115px;text-align:right;width:500px">
-          <%= link_to "Videos", videos_url %> - <%= link_to "Categories", categories_url %> - <%= link_to "Subcategories", subcategories_url %> - <%= link_to "New Video", new_video_url %>
+          <%= link_to "Videos", videos_url %> - <%= link_to "Streams", streams_url %> - <%= link_to "Categories", categories_url %> - <%= link_to "Subcategories", subcategories_url %> - <%= link_to "New Video", new_video_url %>
          </div>
          
       </div>
