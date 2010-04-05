@@ -41,6 +41,6 @@ Rails::Initializer.run do |config|
 end
 
 #MONGO MAPPER CONFIGURATION BLOCK
-MongoMapper.database = "iptv_#{RAILS_ENV}"
+MongoMapper.database = "iptv_#{RAILS_ENV}", :logger => Rails.logger
 CONFIG = YAML.load_file "#{RAILS_ROOT}/config/config.yaml"  
 CONFIG['general']['media_types'] = CONFIG['general']['media_types'].split(' ')
