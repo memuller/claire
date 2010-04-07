@@ -4,3 +4,4 @@ log/*.pid
 /public/videos
 video.cn.tmproj
 *.html
+current.god
