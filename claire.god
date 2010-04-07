@@ -103,35 +103,35 @@ end
 #== MONGOD
 # presumes an mongod aliased or properly configured command, or will fail
 # TODO: make a local config file and data store
-God.watch do |t|
-  t.name = "mongod"
-  t.start = "mongod"
-  t.start_grace = 10.seconds
-  
-  t.start_if do |start|
-    start.condition :process_running do |p|
-      p.interval = 30.seconds
-      p.running = false
-    end    
-  end
-end
+# God.watch do |t|
+#   t.name = "mongod"
+#   t.start = "mongod"
+#   t.start_grace = 10.seconds
+#   
+#   t.start_if do |start|
+#     start.condition :process_running do |p|
+#       p.interval = 30.seconds
+#       p.running = false
+#     end    
+#   end
+# end
 
 #== MONGREL
 # starts up an daemonized mongrel instance
-God.watch do |t|
-	t.name = "mongrel"
-	t.dir = RAILS_ROOT
-	t.start = "mongrel_rails start -c #{RAILS_ROOT} -P #{RAILS_ROOT}/log/mongrel.pid -p 3000 -d"
-	t.restart = "mongrel_rails restart -c #{RAILS_ROOT} -P #{RAILS_ROOT}/log/mongrel.pid"
-	t.stop = "mongrel_rails start -c #{RAILS_ROOT} -P #{RAILS_ROOT}/log/mongrel.pid -w 5"
-	t.start_grace = 30.seconds
-	t.pid_file = File.join(God.pid_file_directory, "mongrel.pid")
-  t.behavior(:clean_pid_file)
-	
-	t.start_if do |start|
-    start.condition :process_running do |p|
-      p.interval = 20.seconds
-      p.running = false
-    end    
-  end
+# God.watch do |t|
+# 	t.name = "mongrel"
+# 	t.dir = RAILS_ROOT
+# 	t.start = "mongrel_rails start -c #{RAILS_ROOT} -P #{RAILS_ROOT}/log/mongrel.pid -p 3000 -d"
+# 	t.restart = "mongrel_rails restart -c #{RAILS_ROOT} -P #{RAILS_ROOT}/log/mongrel.pid"
+# 	t.stop = "mongrel_rails start -c #{RAILS_ROOT} -P #{RAILS_ROOT}/log/mongrel.pid -w 5"
+# 	t.start_grace = 30.seconds
+# 	t.pid_file = File.join(God.pid_file_directory, "mongrel.pid")
+#   t.behavior(:clean_pid_file)
+# 	
+# 	t.start_if do |start|
+#     start.condition :process_running do |p|
+#       p.interval = 20.seconds
+#       p.running = false
+#     end    
+#   end    
 end
