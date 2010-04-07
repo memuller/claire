@@ -68,7 +68,7 @@ if WANTS.include? 'starling'
 end
 
 #== WORKLING MESSAGE CLIENT
-if WANTS.include? 'starling'
+if WANTS.include? 'workling'
 	God.watch do |t|
 	  t.name = "workling"
 	  t.dir = RAILS_ROOT
@@ -103,7 +103,7 @@ if WANTS.include? 'starling'
 end
 
 #== MONGOD
-if WANTS.include? 'starling'
+if WANTS.include? 'mongo'
 # presumes an mongod aliased or properly configured command, or will fail
 # TODO: make a local config file and data store
 	God.watch do |t|
@@ -122,7 +122,7 @@ end
 
 #== MONGREL
 # starts up an daemonized mongrel instance
-if WANTS.include? 'starling'
+if WANTS.include? 'mongrel'
 	God.watch do |t|
 		t.name = "mongrel"
 		t.dir = RAILS_ROOT
