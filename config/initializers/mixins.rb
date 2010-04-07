@@ -1,3 +1,9 @@
+#MONGO MAPPER CONFIGURATION BLOCK
+CONFIG = YAML.load_file "#{RAILS_ROOT}/config/config.yaml"  
+CONFIG['general']['media_types'] = CONFIG['general']['media_types'].split(' ')
+MongoMapper.connection = Mongo::Connection.new("127.0.0.1", 27017, :logger => Rails.logger)
+MongoMapper.database = "iptv_#{RAILS_ENV}"
+
 class Symbol
 	def to_class
 		self.to_s.classify.constantize rescue return nil
