@@ -1,4 +1,4 @@
-@item_type = :videos unless @item_type
+@item_type = :items unless @item_type
 xml.channel do |xml|
 	if @category
 		xml.title @category.name
@@ -9,9 +9,11 @@ xml.channel do |xml|
 	else
 		xml.title "Project St. Claire - Searching for #{@item_type.to_s} matching: #{@search_terms}"
 	end
-	items = render(:partial => "#{@item_type}/show", :collection => @results, :as => @item_type, :format => 'xml', :locals => {:full => false})      
-	xml << items if items
-	 	
+	@results.each do |result|
+		klass = result.class.to_s.downcase
+		xml <<  render(:partial => "#{klass.pluralize}/show", :as => @item_type, :format => 'xml', :locals => {:full => false, klass.to_sym => result})
+	end
+		 	
 	xml.atom:link, :rel => "previous", :href => @previous_url if @previous_url
 	xml.atom:link, :rel => "next", :href => @next_url if @next_url
 	
