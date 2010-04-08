@@ -5,3 +5,4 @@ log/*.pid
 video.cn.tmproj
 *.html
 current.god
+db/**
