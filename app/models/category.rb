@@ -43,15 +43,34 @@ class Category
 		define_method "num_#{type}" do
 	     type.classify.constantize.count :"#{self.class.to_s.downcase}_id" => id
 		end
-		
+						
 		# returns all items of this type that has this object as parent
 		class_eval <<-METHOD
 			def #{type} args={}
+				klass = self.class.to_s.downcase << "_id"
+				klass = klass.to_sym
 				args[:order] ||= "created_at DESC"
-				args.merge!({:"#{self.class.to_s.downcase}_id" => _id})
-				#{type.classify.constantize}.all prepare_uid_from_args(args)
+				args.merge!({klass => _id})
+				Category.prepare_uid_from_args(args)				
+				#{type.classify.constantize}.all args 
 			end
 		METHOD
+	end
+	
+	# fetches the count of all items by summing the individual counters 
+	def num_items
+		num = 0
+		MEDIA_TYPES.each do |media|
+			num += self.send "num_#{media}"
+		end
+		num
+	end
+	
+	# fetches all items by merging the individual finder methods
+	def items args={}
+		arr = []
+		MEDIA_TYPES.each { |media| arr = arr + self.send("#{media}", args) }
+		arr
 	end
 	
 	USERS_CLASS = CONFIG['general']['users_class'].classify.constantize
@@ -71,7 +90,7 @@ class Category
 			user_id = nil
 		end
 				
-		args.delete_if { |k,v| %w(user user_id owner_id controller).include? k }
+		args.delete_if { |k,v| %w(user user_id owner_id controller).include? k.to_s }
 		args.merge!({:owner_id => user_id}) if user_id
 		args
 	end
