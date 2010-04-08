@@ -1,5 +1,34 @@
-#==this little guy keeps the whole system running
+#== This guy keeps the whole system running.
+# You should specify the desired components to monitor bellow,
+# as well as the environment to run them on.
+# 
+# The components are:
+# = mongrel: application server. You'll need it if the app isn't 
+# 	already deployed in some other way (eg Apache, nginx)
+# = mongo: dabatase server. Nothing will work without this. Can be shared
+#   between other mongo-using applications.
+# = starling: queue server. Async processes will fail without this. Can
+#   be shared between other starling-enabled applications.
+# = workling: queue client. Async processes will fail without this.
+# = memcache: caching client. Some API queries will be slower without this.
+#   Can be shared between multiple applications, but it's not recommended.
 
+#which components do you want?
+WANTS = %w(mongo starling workling mongrel)
+#which env will they be run on?
+RAILS_ENV = 'development'
+#where's rails root dir? (defaults to this file's dir)
+RAILS_ROOT = File.dirname __FILE__
+#the user to run rails under 
+RAILS_USER = "memuller"
+# the group from the user above
+RAILS_GROUP = "staff"
+# where's the ruby executable?
+RUBY_BIN = "ruby"
+# in which dir can we place the PID control files?
+God.pid_file_directory = "#{RAILS_ROOT}/log"
+
+# extends god to include a matcher that tests if the last workling output in an error description.
 module God
 	module Conditions
 		class WorklingHanged < PollCondition
@@ -18,13 +47,6 @@ module God
 		end
 	end
 end
-WANTS = %w(mongo starling workling mongrel)
-RAILS_ENV = 'production'
-RAILS_ROOT = File.dirname __FILE__
-RAILS_USER = "memuller"
-RAILS_GROUP = "staff"
-RUBY_BIN = "ruby"
-God.pid_file_directory = "#{RAILS_ROOT}/log"
 
 #== STARLING MESSAGE SERVER
 if WANTS.include? 'starling'

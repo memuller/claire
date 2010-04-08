@@ -11,24 +11,35 @@ Rails::Initializer.run do |config|
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
   
   # == DEPENDENCIES GALLORE
-  # mongo_mapper 0.6.10 works only with mongo 0.18.2; even thought there's a newer one
   MONGO_VERSION = "0.19.3" and RSPEC_VERSION = "1.2.9"
-  config.gem "mongo", :version => MONGO_VERSION
-  #config.gem "mongo_ext", :lib => false, :version => MONGO_VERSION
-  config.gem "mongo_mapper", :version => "0.7.3"
-  config.gem "state-fu"
-  config.gem "paperclip"
-  config.gem "rspec", :lib => false, :version => RSPEC_VERSION
-  config.gem "rspec-rails", :lib => false, :version => RSPEC_VERSION
-  # performance increase for workling/starling
-  config.gem "system_timer", :lib => false
-  #rvideo and its pal, flvtool
-  config.gem "rvideo-tecnobrat", :lib => "rvideo"
-  config.gem "flvtool2", :lib => false
+	#mongodb stuff and mappers
+		config.gem "mongo", :version => MONGO_VERSION
+	  # config.gem "mongo_ext", :lib => false, :version => MONGO_VERSION
+		# mongo_ext is SERIOUSLLY BUGGED ON OSX. TODO: add a trigger that enables it
+		# on non-darwin kernels.  
+		config.gem "mongo_mapper", :version => "0.7.3" 
+  #state-machine-like controll for video workers.
+		config.gem "state-fu"
+	#handles file uploads. 
+	  config.gem "paperclip"   
+	#rspec and testing stuff
+		config.gem "rspec", :lib => false, :version => RSPEC_VERSION
+	  config.gem "rspec-rails", :lib => false, :version => RSPEC_VERSION
+	  config.gem 'factory_girl'
+	# performance increase for workling/starling
+	  config.gem "system_timer", :lib => false   
+	#rvideo and its pal, flvtool
+	  config.gem "rvideo-tecnobrat", :lib => "rvideo"
+	  config.gem "flvtool2", :lib => false
   #for youtube video publishing
-  config.gem "youtube-g", :lib => "youtube_g"
-  config.gem 'factory_girl'
-	config.gem 'bcrypt-ruby', :lib => "bcrypt"
+		config.gem "youtube-g", :lib => "youtube_g"   
+  #password hashing
+		config.gem 'bcrypt-ruby', :lib => "bcrypt" 	
+	#those guys aren't needed here, but without them,
+	#other parts of the system will fail.
+		config.gem "god", :lib => false
+		config.gem "starling", :lib => false
+		
   #config.frameworks -= [ :active_record ]
 
   #config.active_record.observers = :cacher, :garbage_collector, :forum_observer
@@ -41,5 +52,3 @@ Rails::Initializer.run do |config|
 
 
 end
-
-
