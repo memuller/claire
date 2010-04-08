@@ -10,6 +10,9 @@ ActionController::Routing::Routes.draw do |map|
 	map.most_viewed_videos 'videos/most_viewed/.:format', :controller => :videos, :action => 'most_viewed'
 	map.special_videos 'videos/specials/.:format', :controller => :videos, :action => 'specials'   
 	
+	map.videos_category 'categories/:id/videos.:format', :controller => :categories, :action => :videos
+	map.streams_category 'categories/:id/streams.:format', :controller => :categories, :action => :streams
+	
 	#user authentication control
 	map.logout 'logout', :controller => 'applications',	:action => 'logout'
 	map.login 'login', :controller => 'applications', :action => 'login' 
