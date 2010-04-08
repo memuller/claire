@@ -4,13 +4,39 @@ class CategoriesController < ApplicationController
     @categories = Category.all    
   end
   
+  def videos
+		raise "(404) Category not found" unless @category = Category.find(params[:id])
+		respond_to do |wants|
+			wants.html
+			wants.xml do
+				set_pagination
+				@results = @category.videos
+				@item_type = :videos
+				render 'videos/search', :format => 'xml'
+			end						
+		end
+	end
+	
+	def streams
+		raise "(404) Category not found" unless @category = Category.find(params[:id])
+		respond_to do |wants|
+			wants.html
+			wants.xml do
+				set_pagination
+				@results = @category.streams
+				@item_type = :streams
+				render 'videos/search', :format => 'xml'
+			end						
+		end
+	end
+	
   def show
     raise "(404) Category not found" unless @category = Category.find(params[:id])
 		respond_to do |wants|
 			wants.html
 			wants.xml do
 				set_pagination
-				@results = @category.videos
+				@results = @category.videos | @category.streams
 				render 'videos/search', :format => 'xml'
 			end						
 		end
