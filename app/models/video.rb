@@ -15,11 +15,13 @@ class Video
   key :category_id, ObjectId
   key :subcategory_id, ObjectId
 
+  #worker attributes and askers
 	key :publish_to, Array, :default => []
 	key :archive_to, Boolean, :default => []
 	key :encode_to, Array, :default => []
 	key :encode_times, Hash, :default => {}
   key :formats, Array, :default => []
+	
 	#metadata
   key :duration, Integer
 

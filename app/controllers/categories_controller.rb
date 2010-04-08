@@ -80,7 +80,8 @@ class CategoriesController < ApplicationController
   end
   
   def get_subcategories_menu
-    category = Category.find params[:category_id]
+    category = Category.find params[:category_id] 
+		@media_type = params[:media_type] ? params[:media_type] : :video
     render :partial => "videos/subcategory", :locals => {:subcategories => category.subcategories}
   end
   

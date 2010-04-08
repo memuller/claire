@@ -42,7 +42,7 @@
   <p><%= f.submit "Submit" %></p>
 <% end %>
 
-<%= observe_field :video_category_id, :frequency => 0.5, :url => {:controller => :categories, :action => :get_subcategories_menu }, :update => 'subcategory_select', :with => 'category_id' %>
+<%= observe_field :video_category_id, :frequency => 0.5, :url => {:controller => :categories, :action => :get_subcategories_menu, :params => {:media_type => :video} }, :update => 'subcategory_select', :with => 'category_id' %>
 
 <%= observe_field :video_special, :frequency => 0.5, :url => {:controller => :videos, :action => :can_be_special, :params => {:video_id => @video.id}}, :update => 'special_remove', :with => "special" %>
 
