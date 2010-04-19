@@ -7,6 +7,8 @@ class Stream
 	key :url, String, :required => true
 	key :format, String
 	
+	key :twitter_user, String
+	
 	key :has_audio, String, :default => :yes
 	key :has_video, String, :default => :yes
 	

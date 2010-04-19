@@ -30,6 +30,9 @@ class ApplicationsController < ApplicationController
   
   def show
     @application = Application.find(params[:id])
+		respond_to do |wants|
+			wants.json { @application.to_json }
+		end
   end
   
   def new

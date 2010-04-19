@@ -101,7 +101,8 @@ class Search
 		@params[:what] = :videos unless @params[:what]
 		@klass = @params[:what].to_s.classify.constantize
 		@params.delete :what
-		@params[:okay] = true if @klass = Video and @params[:okay].nil?	
+		@params[:okay] = true if @klass = Video and @params[:okay].nil?
+		@params.	
 		search
 		return @results
 	end

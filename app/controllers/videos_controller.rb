@@ -22,7 +22,7 @@ class VideosController < ApplicationController
 		end
 		respond_to do |wants|
 			wants.xml do
-				render :partial => 'show'
+				render :partial => 'show', :layout => true 
 			end
 			wants.html
 		end
