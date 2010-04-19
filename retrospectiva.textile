@@ -1,5 +1,3 @@
-p>. _Documentação da API em andamento. Veja ticket [#42]._
-
 p>. "Home":/projects/claire/wiki - "Status":/projects/claire/milestones - [[Descrição Técnica]] - [[Diagramas]] - [[API]] - "Online":/projects/online-cn/wiki - "IPTV":/projects/iptv/wiki - [[bibliography:Referências Bibliográficas]]
 
 h1. Introdução
@@ -14,6 +12,18 @@ O projeto contempla a criação de um sistema que possibilite a captação, orga
 Estas mídias podem ser entregues tanto a aplicativos e serviços da Fundação e seus parceiros, quanto para provedores externos - como Youtube e Vimeo. Quando em uso interno, os vídeos agem como um recurso único e centralizado, compartilhando as mesmas alterações, comentários de usuário, qualificações, etc entre todos os aplicativos.
 
 Até a primeira metade de Março/2010, os componentes mais evidentes do projeto serão o Online - portal de acopanhamento & participação ao vivo da programação de rádio e TV; e no sistema que fornece conteúdo aos protótipos do projeto IPTV Canção Nova.
+
+h2. Timeframe & estado atual
+
+O projeto é dividido em etapas; no qual é intencional a ausência de planejamento referente a etapa seguinte. Tal abordagem é derivada de metodologias ágeis de gestão, e de análise sistemática de projetos de gestão tradicional.
+
+Ao final de cada etapa, os progressos da mesma são consolidados e documentados. A qualquer momento que progressos no projeto sejam desejados, uma nova etapa é planejada.
+
+Em seu estado atual, o Claire cataloga vídeos on-demmand e streams. Seu deployment em condições ideais ainda não foi definido.
+
+O *Online* utiliza streams fornecidos pelo Claire; e o projeto de *Legendas.cn* criará versões internacionalizadas de vídeos on-demmand nele armazenado.
+
+A *IPTV*, em seu estado atual, não utiliza o Claire; mas planeja-se que a mesma migre para o sistema assim que for possível dispender recursos de tempo e pessoal para realizar tal processo.
 
 h1. Análise Estratégica
 
@@ -70,15 +80,6 @@ _(Combinação de forças com oportunidades)_
 * A demanda comprovada (por exemplo, através de conteúdo não-oficial no Youtube) por conteúdo da Canção Nova, aliado a possibilidade da existência de um repositório digital, permite a criação de um modelo de negócios que comtemple esta oportunidade e forneça usuário o conteúdo que ele busca sem que o mesmo precisse recorrer a pirataria.
 * A rápida inserção do projeto em escala global tornaria-on pioneiro.
 * Recente progressiva expansão da Canção Nova para mídias sociais
-
-
-h2. Timeframe
-
-O projeto é dividido em etapas; no qual é intencional a ausência de planejamento referente a etapa seguinte. Tal abordagem é derivada de metodologias ágeis de gestão, e de análise sistemática de projetos de gestão tradicional.
-
-Ao final de cada etapa, os progressos da mesma são consolidados e documentados. A qualquer momento que progressos no projeto sejam desejados, uma nova etapa é planejada.
-
-Salvo por dificuldades no deployment e ajustes progressivos (que possivelmente serão necessários conforme caminha o desenvolvimento do primeiro aplicativo usuário do projeto, o portal IPTV), a etapa atual será entregue na primeira metade de Março.
 
 h2. Esclarecimentos
 
